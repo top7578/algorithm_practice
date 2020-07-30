@@ -1,0 +1,12 @@
+#20.07.30
+
+n = int(input())
+
+input_data = list(map(int, input().split()))
+
+sum_of_distance = 0
+for i in range(0, n):    # 절반만 구해서*2
+    for j in range(i+1, n):
+        sum_of_distance += abs(input_data[i] - input_data[j])
+
+print(sum_of_distance*2)
