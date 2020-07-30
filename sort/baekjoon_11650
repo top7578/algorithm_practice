@@ -1,0 +1,21 @@
+""""
+v = [(3,4),(2,2),(3,3)]
+
+v.sort(key=lambda x:(x[0], x[1]))
+
+print(v)
+"""
+
+n = int(input())
+
+input_data = [(0, 0)] * n
+for i in range(n):
+  input_data[i] = tuple(map(int, input().split()))
+
+#첫 번째 원소로 오름차순 정렬하고, 첫 번째 원소 같은 경우 두번째 원소로 오름차순 정렬하기    
+input_data.sort(key=lambda x:(x[0], x[1]))
+
+for i in range(n):
+  print(input_data[i][0], input_data[i][1])
+
+#그냥 input_data.sort() 했어도 원하는 결과 출력
