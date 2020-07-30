@@ -1,0 +1,12 @@
+n = int(input())
+
+input_data = [(0, '')] * n
+for i in range(n):
+  input_data[i] = input().split()
+  input_data[i][0] = int(input_data[i][0])
+  input_data[i].append(i) #input_data[i][2]: 가입한 순 기록
+
+input_data.sort(key=lambda x:(x[0], x[2])) 
+
+for i in range(n):
+  print(input_data[i][0], input_data[i][1])
