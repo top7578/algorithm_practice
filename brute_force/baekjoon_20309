@@ -1,0 +1,39 @@
+""""
+for i in range(len_input_data):
+  sum = 0
+  breaker = True
+  
+  answer.clear()
+  answer.append(input_data[i])
+  for j in range(i+1, len_input_data):
+    if breaker:
+      if sum > 100:
+        breaker = False        
+      elif sum == 100:
+        print(answer)
+      answer.append(input_data[j])
+      print(answer)
+"""
+
+def find_dwarf(last_input_data, answer, sum):
+  if sum > 100:
+    return         
+  elif sum == 10:
+    print(answer)
+  for next_idx in range(len(last_input_data)):
+    next_datum = last_input_data[next_idx]
+    sum += next_datum
+    answer.append(next_datum)
+    find_dwarf(last_input_data[next_idx+1:], answer, sum)
+    sum -= answer.pop(-1)
+
+
+input_data = []
+for _ in range(5):
+  input_data.append(int(input()))
+
+input_data.sort()
+
+len_input_data = len(input_data)
+
+find_dwarf(input_data, [], 0)  
