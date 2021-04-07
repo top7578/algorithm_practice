@@ -1,0 +1,19 @@
+import heapq
+
+n, m = map(int, input().split())
+
+cards = list(map(int, input().split()))
+
+q = []
+for card in cards:
+  heapq.heappush(q, card)
+
+for _ in range(m):
+  a = heapq.heappop(q)
+  b = heapq.heappop(q)
+
+  c = a + b
+  heapq.heappush(q, c)
+  heapq.heappush(q, c)
+
+print(sum(q))
