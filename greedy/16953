@@ -1,0 +1,21 @@
+from collections import deque
+
+a, b = map(int, input().split())
+
+q = deque([(a, 1)])
+
+answer = -1
+while q:
+  now, cnt = q.pop()
+  if now == b:
+    answer = cnt
+
+  next1 = now * 2
+  if next1 <= b:
+    q.append((next1, cnt+1))
+  
+  next2 = int(str(now) + '1')
+  if next2 <= b:
+    q.append((next2, cnt+1))
+
+print(answer)
