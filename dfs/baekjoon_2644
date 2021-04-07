@@ -1,0 +1,31 @@
+import sys
+sys.setrecursionlimit(10 ** 5)    #1
+
+def dfs(now, cnt):
+  global answer                   #2
+  visited[now] = True
+  if now == b:
+    answer = cnt
+
+  for next in graph[now]:
+    if not visited[next]:
+      dfs(next, cnt+1)
+
+n = int(input())
+
+a, b = map(int, input().split())
+
+graph = [[] for _ in range(n+1)]
+
+m = int(input())
+for _ in range(m):
+  x, y = map(int, input().split())
+  graph[x].append(y)
+  graph[y].append(x)
+
+visited = [False] * (n+1)          #3
+
+answer = -1
+dfs(a, 0)
+
+print(answer)
