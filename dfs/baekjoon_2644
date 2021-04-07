@@ -1,3 +1,7 @@
+#1. dfs는 재귀 범위 제한 있음 -> setrecursionlimit으로 제한 범위 늘려줌
+#2. 메소드에서 선언되지 않은 변수 사용시에는 global 처리
+#3. bfs, dfs는 visited로 방문한 노드 
+
 import sys
 sys.setrecursionlimit(10 ** 5)    #1
 
@@ -29,5 +33,3 @@ answer = -1
 dfs(a, 0)
 
 print(answer)
-
-???
