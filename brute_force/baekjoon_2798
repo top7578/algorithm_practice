@@ -1,0 +1,14 @@
+from itertools import combinations
+
+n, m = map(int, input().split())
+
+card = list(map(int, input().split()))
+
+candidates = list(combinations(card, 3))
+
+answer = 0
+for c in candidates:
+  if sum(c) <= m:
+    answer = max(answer, sum(c))
+
+print(answer)
