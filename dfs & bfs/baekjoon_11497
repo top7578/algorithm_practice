@@ -1,0 +1,42 @@
+#1. bfs에서는 cnt 변수로 만들어 리턴
+#2. 함수 내에 visited 함수 만들기
+#3. 컨테이너 타입의 데이터를 Unpacking
+
+from collections import deque
+
+def bfs(x):
+  q = deque([x])
+  cnt = 0                       #1
+
+  visited = [False] * (n+1)     #2
+  visited[x] = True
+
+  while q:
+    now = q.pop()
+    cnt += 1
+    for next in graph[now]:
+      if not visited[next]:
+        visited[next] = True
+        q.append(next)
+      
+  return cnt                    #1
+
+n, m = map(int, input().split())
+
+graph = [[] for _ in range(n+1)]
+
+for _ in range(m):
+  a, b = map(int, input().split())
+  graph[b].append(a)
+
+count = 0
+answer = []
+for i in range(1, n+1):
+  tmp = bfs(i)
+  if count < tmp:
+    count = tmp
+    answer = [i]
+  elif count == tmp:
+    answer.append(i)
+
+print(*answer)                    #3
