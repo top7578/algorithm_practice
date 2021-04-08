@@ -1,5 +1,6 @@
-#union-find
+#union-find 
 #1. 부모 노드와 그 전 노드를 union
+
 
 def find_parent(x):
   if parent[x] != x:
