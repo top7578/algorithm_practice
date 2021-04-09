@@ -1,7 +1,7 @@
 #1. set으로 중복되는 순열 제거
 #2. 식 결과 값 범위 확인 할 것 max_value = 0 으로 초기화해서 오답
 #3. python과 c 음수 나누기 연산 값 다름 주의 python -> 내림, c -> 버림
-#백트래킹으로도 접근해 볼 것
+# 백트래킹으로도 접근해 볼 것
 
 from itertools import permutations
 
