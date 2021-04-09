@@ -1,0 +1,45 @@
+#1. set으로 중복되는 순열 제거
+#2. 식 결과 값 범위 확인 할 것 max_value = 0 으로 초기화해서 오답
+#3. python과 c 음수 나누기 연산 값 다름 주의 python -> 내림, c -> 버림
+#백트래킹으로도 접근해 볼 것
+
+from itertools import permutations
+
+n = int(input())
+
+data = list(map(int, input().split()))
+
+op = list(map(int, input().split()))
+
+operations = []
+for i in range(4):
+  operations += [i+1] * op[i]
+
+#1
+candidates = list(set(permutations(operations, n-1)))
+
+min_value = 987654321
+max_value = -987654321            #2
+
+for c in candidates:
+  tmp = data[0]
+  for i in range(n-1):
+    if c[i] == 1:
+      tmp += data[i+1]
+    elif c[i] == 2:
+      tmp -= data[i+1]
+    elif c[i] == 3:
+      tmp *= data[i+1]
+    elif c[i] == 4:
+      if tmp < 0:                   #3
+        tmp = -((-tmp)//data[i+1])
+      else:
+        tmp //= data[i+1]
+    
+  if tmp < min_value:
+    min_value = tmp
+  if tmp > max_value:
+    max_value = tmp
+
+print(max_value)
+print(min_value)
