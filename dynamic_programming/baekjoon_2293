@@ -1,0 +1,18 @@
+# 사용한 동전의 구성이 같은데, 순서만 다른 것은 같은 경우이다.
+# coin 하나씩 진행
+#1. 코인 1개로 만들어 지는 경우 계산 위해
+
+import sys
+ 
+n, k = list(map(int, sys.stdin.readline().split()))
+coins = []
+for i in range(n):
+    coins.append(int(sys.stdin.readline()))
+ 
+dp = [0] * 10001
+dp[0] = 1         #1
+for i in coins:
+    for j in range(i, k+1):
+        dp[j] += dp[j-i]
+ 
+print(dp[k])
