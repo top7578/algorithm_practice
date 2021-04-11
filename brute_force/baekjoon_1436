@@ -1,0 +1,19 @@
+#1. 연속하지 않으면 if title.count('6') >= 3 이런식으로 해결
+#1. in은 str에 사용할 수 있음, count 함수도 마찬가지
+# while 돌리며 원하는 답 나올 때 
+
+
+n = int(input())
+
+title = 666
+
+cnt = 0
+while True:
+  if '666' in str(title):   #1
+    cnt += 1
+  
+  if cnt == n:
+    print(title)
+    break
+  
+  title += 1
