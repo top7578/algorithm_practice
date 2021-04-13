@@ -1,9 +1,10 @@
 #1. 지워야 할 갯수 남아있거나, 들어있는 값이 있거나, 입력 값이 마지막 값보다 큰 경우
 #2. 값은 계속 추가
 #3. 마지막 데이터는 그냥 추가되고, 같은 값 나오거나 작은 값 나오면 추가되기 때문에 슬라이싱 필수
+#4. 이 방법으로 숙지할 것
 
 import sys
-input = sys.stdin.readline
+input = lambda : sys.stdin.readline().rstrip()  #4
 
 n, k = map(int, input().split())
 s = list(input().strip())
