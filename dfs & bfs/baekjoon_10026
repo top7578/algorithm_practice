@@ -1,6 +1,7 @@
 # 모든 'G'를 'R'로 바꾸어 해결하는 방법도 
 #1. h_visited로 적는 실수 종종 하는데 조심
 
+
 from collections import deque
 
 dx = [-1, 0, 1, 0]
