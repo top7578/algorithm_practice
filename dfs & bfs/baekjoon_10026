@@ -1,0 +1,60 @@
+# 모든 'G'를 'R'로 바꾸어 해결하는 방법도 
+#1. h_visited로 적는 실수 종종 하는데 조심
+
+from collections import deque
+
+dx = [-1, 0, 1, 0]
+dy = [0, 1, 0, -1]
+
+def n_person(x, y, start):
+  q = deque([(x, y)])
+  n_visited[x][y] = True
+  while q:
+    x, y = q.popleft()
+    for i in range(4):
+      nx = x + dx[i]
+      ny = y + dy[i]
+      if 0 <= nx < n and 0 <= ny < n and board[nx][ny] == start and not n_visited[nx][ny]:
+        q.append((nx, ny))
+        n_visited[nx][ny] = True
+    
+def h_person(x, y, start):
+  q = deque([(x, y)])
+  h_visited[x][y] = True
+  while q:
+    x, y = q.popleft()
+    for i in range(4):
+      nx = x + dx[i]
+      ny = y + dy[i]
+      if 0 <= nx < n and 0 <= ny < n and not h_visited[nx][ny]:
+        if start == 'B' and board[nx][ny] == start:
+          q.append((nx, ny))
+          h_visited[nx][ny] = True
+        elif start in ['R', 'G'] and board[nx][ny] in ['R', 'G']:
+          q.append((nx, ny))
+          h_visited[nx][ny] = True
+  
+n = int(input())
+
+board = []
+for _ in range(n):
+  board.append(input())
+
+n_visited = [[False] * n for _ in range(n)]
+normal = 0
+for i in range(n):
+  for j in range(n):
+    if n_visited[i][j] == False:
+      n_person(i, j, board[i][j])
+      normal += 1
+
+h_visited = [[False] * n for _ in range(n)]
+handicapted = 0
+for i in range(n):
+  for j in range(n):
+    if h_visited[i][j] == False:    #1
+      h_person(i, j, board[i][j])
+      handicapted += 1
+
+print(normal)
+print(handicapted)
