@@ -1,0 +1,21 @@
+#1. d[i]가 i 값을 가지면 좋을 듯
+#2. 그리디로는 해결할 수 없다. 43의 경우 5^2으로 하는게 더 좋음.
+
+n = int(input())
+
+def find_h(x):
+  i = 0
+  while True:
+    if i * i > x:
+      break
+    i += 1
+  return i-1
+
+d = [987654321] * 100001  #1
+d[0] = 0
+for i in range(1, n+1):
+  h = find_h(i)
+  for j in range(1, h+1): #2
+    d[i] = min(d[i], d[i-j*j] + 1)
+
+print(d[n])
