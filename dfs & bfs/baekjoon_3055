@@ -1,0 +1,59 @@
+#시간 초과 코드 수정 
+
+from collections import deque
+import copy
+import sys
+
+input = lambda : sys.stdin.readline().rstrip()
+
+dx = [-1, 0, 1, 0]
+dy = [0, 1, 0, -1]
+
+def spread_water(temp):
+  tmp = copy.deepcopy(temp)
+  for w_x in range(r):
+    for w_y in range(c):
+      if temp[w_x][w_y] == '*':
+        for i in range(4):
+          w_nx = w_x + dx[i]
+          w_ny = w_y + dy[i]
+          #맵 벗어나지 않고, 비버 굴 아니며, 벽 아닌 경우
+          if 0 <= w_nx < r and 0 <= w_ny < c and temp[w_nx][w_ny] != 'D' and temp[w_nx][w_ny] != 'X':
+            tmp[w_nx][w_ny] = '*'
+  return tmp
+
+def bfs(x, y):
+  q = deque([(board, 0, x, y)])
+  while q:
+    temp, cnt, x, y = q.pop()
+    tmp = copy.deepcopy(temp)
+    tmp = spread_water(tmp)
+    for i in range(4):
+      nx = x + dx[i]
+      ny = y + dy[i]
+      #맵 벗어나지 않고, 물 퍼지지 않은 공간이며, 벽 아니고, 방문한 적 X 경우
+      if 0 <= nx < r and 0 <= ny < c and tmp[nx][ny] != '*' and tmp[nx][ny] != 'X':
+        if tmp[nx][ny] == 'D':
+          return cnt+1
+
+        q.append((tmp, cnt+1, nx, ny))
+  
+  return -1
+
+
+r, c = map(int, input().split())
+
+x, y = 0, 0    #고슴도치 위치
+
+board = []
+for i in range(r):
+  board.append(list(input()))
+  for j in range(c):
+    if board[i][j] == 'S':
+      x, y = i, j
+
+answer = bfs(x, y)
+if answer == -1:
+  print('KAKTUS')
+else:
+  print(answer)
