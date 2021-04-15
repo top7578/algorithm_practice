@@ -1,0 +1,34 @@
+# 투 포인터(문자열))
+#1. 앞 뒤로 다른 문자 나올 경우 해당 문자 스킵하고 비교
+
+def is_pseudo_palindrome(x, left, right):
+  while (left < right):
+    if x[left] == x[right]:
+      left += 1
+      right -= 1
+    else:
+      return False
+  return True
+  
+def is_palindrome(x):
+  left = 0
+  right = len(x)-1
+
+  while (left < right):
+    if x[left] == s[right]:
+      left += 1
+      right -= 1
+    else: #1
+      skip_left = is_pseudo_palindrome(s, left+1, right)
+      skip_right = is_pseudo_palindrome(s, left, right-1)
+      if skip_left or skip_right:
+        return 1
+      else:
+        return 2
+  return 0
+
+t = int(input())
+
+for _ in range(t):
+  s = input() 
+  print(is_palindrome(s))
