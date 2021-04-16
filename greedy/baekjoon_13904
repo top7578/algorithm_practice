@@ -1,0 +1,51 @@
+#1. 마감일 줄을 때 마다 q에서 한개 씩 pop
+
+import heapq
+import sys
+input = lambda:sys.stdin.readline().rstrip()
+
+n = int(input())
+
+homeworks = []
+for _ in range(n):
+  d, w = map(int ,input().split())
+  homeworks.append((d, w))
+
+homeworks.sort(reverse=True)
+
+q = []
+
+j = homeworks[0][0]   #남은 마감일
+i = 0                 #homeworks 인덱스
+answer = 0
+while j > 0:    #1.
+  while i < n and homeworks[i][0] >= j:
+    heapq.heappush(q, -homeworks[i][1])
+    i += 1
+  
+  if q:
+    answer += (-heapq.heappop(q))
+  j -= 1
+
+print(answer)
+
+"""
+# 다른 풀이 : 점수 큰 것 부터 내림차순으로 정렬하여 채우는 방식(항공이랑 비슷)
+
+import sys
+line = sys.stdin.readline
+
+n = int(line())
+
+arr = [list(map(int, line().split())) for i in range(n)]
+
+arr.sort(key=lambda x: -x[1])
+a = [0]*1001
+
+for d, s in arr:
+    for i in range(d, 0, -1):
+        if a[i] == 0:
+            a[i] = s
+            break
+print(sum(a))
+"""
