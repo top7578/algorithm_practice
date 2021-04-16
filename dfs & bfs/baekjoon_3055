@@ -1,59 +1,57 @@
-#시간 초과 코드 수정 
+#1. 처음 값 변하지 말라고, 물 퍼지게 만드는 상황(append 된 것 제외하고 생각))
+#ctrl + f2 : 변수명 한번에 바꾸기
 
 from collections import deque
-import copy
-import sys
 
-input = lambda : sys.stdin.readline().rstrip()
-
-dx = [-1, 0, 1, 0]
-dy = [0, 1, 0, -1]
-
-def spread_water(temp):
-  tmp = copy.deepcopy(temp)
-  for w_x in range(r):
-    for w_y in range(c):
-      if temp[w_x][w_y] == '*':
-        for i in range(4):
-          w_nx = w_x + dx[i]
-          w_ny = w_y + dy[i]
-          #맵 벗어나지 않고, 비버 굴 아니며, 벽 아닌 경우
-          if 0 <= w_nx < r and 0 <= w_ny < c and temp[w_nx][w_ny] != 'D' and temp[w_nx][w_ny] != 'X':
-            tmp[w_nx][w_ny] = '*'
-  return tmp
+dx = [1, -1, 0, 0]
+dy = [0, 0, 1, -1]
 
 def bfs(x, y):
-  q = deque([(board, 0, x, y)])
-  while q:
-    temp, cnt, x, y = q.pop()
-    tmp = copy.deepcopy(temp)
-    tmp = spread_water(tmp)
-    for i in range(4):
-      nx = x + dx[i]
-      ny = y + dy[i]
-      #맵 벗어나지 않고, 물 퍼지지 않은 공간이며, 벽 아니고, 방문한 적 X 경우
-      if 0 <= nx < r and 0 <= ny < c and tmp[nx][ny] != '*' and tmp[nx][ny] != 'X':
-        if tmp[nx][ny] == 'D':
-          return cnt+1
+    q.append([x, y])
+    c[x][y] = 1
+    while q:
+      water()
+      qlen = len(q) #1
+      while qlen:
+        x, y = q.popleft()
+        for i in range(4):
+            nx = x + dx[i]
+            ny = y + dy[i]
+            if 0 <= nx < n and 0 <= ny < m:
+                if board[nx][ny] == '.' and c[nx][ny] == 0:
+                    c[nx][ny] = c[x][y] + 1
+                    q.append([nx, ny])
+                elif board[nx][ny] == 'D':
+                    print(c[x][y])
+                    return
+        qlen -= 1
+    print("KAKTUS")
+    return
 
-        q.append((tmp, cnt+1, nx, ny))
-  
-  return -1
+def water():
+    wqlen = len(wq)  #1
+    while wqlen:
+        x, y = wq.popleft()
+        for i in range(4):
+            nx = x + dx[i]
+            ny = y + dy[i]
+            if 0 <= nx < n and 0 <= ny < m:
+                if board[nx][ny] == '.':
+                    board[nx][ny] = '*'
+                    wq.append([nx, ny])
+        wqlen -= 1
 
+n, m = map(int, input().split())
+board = [list(map(str, input())) for _ in range(n)]
+c = [[0]*m for _ in range(n)]   #방문 했는지 체크
+q, wq = deque(), deque()
 
-r, c = map(int, input().split())
+for i in range(n):
+    for j in range(m):
+        if board[i][j] == 'S':
+            x1, y1 = i, j
+            board[i][j] = '.'
+        elif board[i][j] == '*':
+            wq.append([i, j])
 
-x, y = 0, 0    #고슴도치 위치
-
-board = []
-for i in range(r):
-  board.append(list(input()))
-  for j in range(c):
-    if board[i][j] == 'S':
-      x, y = i, j
-
-answer = bfs(x, y)
-if answer == -1:
-  print('KAKTUS')
-else:
-  print(answer)
+bfs(x1, y1)
