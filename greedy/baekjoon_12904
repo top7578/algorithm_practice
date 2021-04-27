@@ -1,0 +1,16 @@
+#1. 맨 마지막의 이전 문자 부터 첫 글자 까지
+
+s = input()
+t = input()
+
+answer = 0
+while len(t) >= len(s):
+  if t == s:
+    answer = 1
+  last_alp = t[-1]
+  if last_alp == 'A':
+    t = t[:-1]
+  elif last_alp == 'B':
+    t = t[-2::-1]       #1
+
+print(answer)
