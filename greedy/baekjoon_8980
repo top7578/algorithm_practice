@@ -1,22 +1,25 @@
-import sys
-n, c = map(int, sys.stdin.readline().rstrip("\n").split())
-m = int(sys.stdin.readline().rstrip("\n"))
-nums = []
-temps = [c]*(n)
+n, c = map(int, input().split())
+
+m = int(input())
+
+boxes = []
 for _ in range(m):
-    nums.append(list(map(int, sys.stdin.readline().rstrip("\n").split())))
-nums = sorted(nums, key=lambda x:x[1])
-ans=0
-for i in range(len(nums)):
-    minNum=c+1
-    for j in range(nums[i][0],nums[i][1]):
-        if(temps[j]<minNum):
-            minNum = temps[j]
+  start, end, count = map(int, input().split())
+  boxes.append((start, end, count))
+boxes.sort(key=lambda x: (x[1], -x[0]))
+answer = 0            # 최대 박스 수
+remain = [c] * (n+1)  # 각 위치에 남은 공간
 
-    t = min(minNum,nums[i][2])
-    ans += t
-    for j in range(nums[i][0], nums[i][1]):
-        temps[j] -= t
+for i in range(m):
+  temp = c
+  # 목적지까지 거쳐가는 마을 중 적재량이 가장 적은 적재량 선택
+  for j in range(boxes[i][0], boxes[i][1]):
+    temp = min(temp, remain[j])
+  # 거쳐가는 마을 중 최소의 남은 적재량과 트럭 용량 중 작은 값
+  temp = min(temp, boxes[i][2])
+  # 거쳐가는 마을에 해당 적재량 만큼 감소 처리
+  for j in range(boxes[i][0], boxes[i][1]):
+    remain[j] -= temp
+  answer += temp
 
-
-print(ans)
+print(answer)
