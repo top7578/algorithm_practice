@@ -1,9 +1,40 @@
+def poly(n):
+  global answer
+  if n % 2 == 1:
+    answer = -1
+  else:
+    answer += 'AAAA' * (n // 4)
+    answer += 'BB' * ((n % 4) // 2)
+
+board = input() 
+
+cnt = 0
+answer = ''
+for i in range(len(board)):
+  if answer == -1:
+    break
+
+  if board[i] == 'X':
+    cnt += 1
+  else:
+    poly(cnt)
+    if answer == -1:
+      break   
+    answer += '.'
+    cnt = 0
+
+poly(cnt)
+
+print(answer)
+
+
+"""
 board = input() 
 board = board.replace("XXXX", "AAAA") 
-board = board.replace("XX", "BB") 
-
+board = board.replace("XX", "BB")
+ 
 if 'X' in board: 
   print(-1) 
 else: 
- print(board)
-
+  print(board)
+"""
