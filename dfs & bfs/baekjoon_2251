@@ -1,0 +1,60 @@
+# https://jshong1125.tistory.com/53
+
+from collections import deque
+import sys
+input = lambda: sys.stdin.readline().rstrip()
+
+def isVisited(a_, b_):
+  if visited[a_][b_] == 0:
+    visited[a_][b_] = 1
+    q.append([a_, b_])
+
+def bfs():
+  while q:
+    a_, b_ = q.popleft() 
+    c_ = c - a_ - b_
+
+    if a_ == 0:
+      ans.append(c_)
+    
+    if a_ + b_ < b: # a->b
+      isVisited(0, a_ + b_)
+    else:
+      isVisited(a_ + b_ - b, b)
+    
+    if a_ + c_ < c: # a->c 
+      isVisited(0, b_) 
+    else: isVisited(a_ - (c - c_), b_) 
+    
+    if a_ + b_ < a: # b->a 
+      isVisited(a_ + b_, 0) 
+    else: 
+      isVisited(a, b_ - (a - a_)) 
+      
+    if c_ + b_ < c: # b->c 
+      isVisited(a_, 0) 
+    else: isVisited(a_, b_ - (c - c_)) 
+    
+    if a_ + c_ < a: # c->a 
+      isVisited(a_ + c_, b_) 
+    else: isVisited(a, b_)
+    
+    if c_ + b_ < b: # c->b 
+      isVisited(a_, b_ + c_) 
+    else: 
+      isVisited(a_, b)
+
+
+a, b, c = map(int, input().split())
+
+MAX = 201
+visited = [[0] * MAX for _ in range(MAX)]
+visited[0][0] = 1
+
+q = deque()
+q.append([0, 0])
+
+ans = []
+bfs()
+ans.sort()
+print(*ans)
