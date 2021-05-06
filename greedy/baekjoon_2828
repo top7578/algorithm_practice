@@ -1,0 +1,24 @@
+import sys
+input = lambda: sys.stdin.readline().rstrip()
+
+n, m = map(int, input().split())
+
+answer = 0
+pos = 1
+j = int(input())
+for _ in range(j):
+  target = int(input())
+  if pos < target:
+    pos_ = pos + (m-1)
+    if pos_ < target:
+      answer += (target - pos_)
+      pos += (target - pos_)
+    else:
+      continue
+  elif pos == target:
+    continue
+  else:
+    answer += (pos - target)
+    pos -= target
+  
+print(answer)
