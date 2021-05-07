@@ -2,28 +2,11 @@ import sys
 input = lambda: sys.stdin.readline().rstrip()
 
 n = int(input())
+seats = input()
 
-people = input()
+cnt = seats.count('LL')
 
-i = 0
-answer = 0
-last_p = ''
-while True:
-  if i == n:
-    if last_p == 'S':
-      if people[i-2] == 'L':
-        answer += 1
-    elif last_p == 'LL':
-      answer += 1
-    break
-
-  if people[i] == 'S':
-    answer += 1
-    i += 1
-    last_p = 'S'
-  else:
-    answer += 1
-    i += 2
-    last_p = 'LL'
-
-print(answer)
+if (cnt <= 1):
+    print(len(seats))
+else:
+    print(len(seats) - cnt + 1)
