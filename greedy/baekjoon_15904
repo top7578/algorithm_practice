@@ -6,18 +6,13 @@ def check(i):
     print('I hate UCPC')
     exit()
 
+ucpc = ['U', 'C', 'P', 'C']
+
 s = input()
 
-index_U = s.find('U')
-check(index_U)
-
-index_C = s.find('C', index_U+1)
-check(index_C)
-
-index_P = s.find('P', index_C+1)
-check(index_P)
-
-index_C = s.find('C', index_P+1)
-check(index_C)
+index = -1
+for x in ucpc:
+  index = s.find(x, index+1)
+  check(index)
 
 print('I love UCPC')
