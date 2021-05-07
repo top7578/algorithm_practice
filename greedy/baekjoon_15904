@@ -1,0 +1,23 @@
+import sys
+input = lambda : sys.stdin.readline().rstrip()
+
+def check(i):
+  if i == -1:
+    print('I hate UCPC')
+    exit()
+
+s = input()
+
+index_U = s.find('U')
+check(index_U)
+
+index_C = s.find('C', index_U+1)
+check(index_C)
+
+index_P = s.find('P', index_C+1)
+check(index_P)
+
+index_C = s.find('C', index_P+1)
+check(index_C)
+
+print('I love UCPC')
