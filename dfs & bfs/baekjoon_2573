@@ -1,0 +1,66 @@
+import copy
+import sys
+input = lambda : sys.stdin.readline().rstrip()
+
+sys.setrecursionlimit(10**5)
+
+dx = [-1, 0, 1, 0]
+dy = [0, 1, 0, -1]
+
+def next_year(x, y):
+  cnt = 0
+  for i in range(4):
+    nx = x + dx[i]
+    ny = y + dy[i]
+    if 0 <= nx < n and 0 <= ny < m and temp[nx][ny] == 0:
+      cnt += 1
+  if board[x][y] - cnt < 0:
+    board[x][y] = 0
+  else:
+    board[x][y] -= cnt
+
+def dfs(x, y, visited):
+  for i in range(4):
+    nx = x + dx[i]
+    ny = y + dy[i]
+    if 0 <= nx < n and 0 <= ny < m and board[nx][ny] != 0 and not visited[nx][ny]:
+      visited[nx][ny] = True
+      dfs(nx, ny, visited)
+
+def count_block():
+  check = False   #빙산이 다 녹을 때까지 분리되지 않은 경우
+  cnt = 0   #빙산 덩어리 갯수
+  visited = [[False]*m for _ in range(n)]
+  for i in range(n):
+    for j in range(m):
+      if board[i][j] != 0 and not visited[i][j]:
+        dfs(i, j, visited)
+        cnt += 1
+        check = True
+      
+  if not check:
+    return 0
+  else:
+    return cnt  
+
+n, m = map(int, input().split())
+
+board = [list(map(int, input().split())) for _ in range(n)]
+
+answer = 0
+while True:
+  b = count_block()
+  if b >= 2:
+    break
+  elif b == 0:
+    answer = 0
+    break
+
+  temp = copy.deepcopy(board)
+  for i in range(n):
+    for j in range(m):
+      if temp[i][j] != 0:
+        next_year(i, j)
+  answer += 1
+
+print(answer)
