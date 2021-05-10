@@ -1,0 +1,30 @@
+from itertools import permutations
+
+k = int(input())
+
+data = list(input().split())
+
+digits = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9] 
+
+max_ = '0'
+min_ = '9999999999'
+
+candidates = list(permutations(digits, k+1))
+for c in candidates:
+  check = True
+  for i in range(k):
+    if data[i] == '<':
+      if c[i] > c[i+1]:
+        check = False
+        break     
+    elif data[i] == '>':
+      if c[i] < c[i+1]:
+        check = False
+        break   
+  if check:
+    c = "".join(map(str, c))
+    max_ = max(max_, c)
+    min_ = min(min_, c)
+
+print(max_)
+print(min_)
