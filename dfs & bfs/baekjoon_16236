@@ -1,0 +1,70 @@
+from collections import deque
+
+import sys
+input = lambda : sys.stdin.readline().strip()
+
+dx = [-1, 0, 1, 0]
+dy = [0, 1, 0, -1]
+
+# 모든 칸을 탐색하며 최단 거리의 물고기를 먹는다.
+def bfs(i, j, size):
+  visited = [[0]*n for _ in range(n)]
+  visited[i][j] = 1
+
+  can_eat = []
+  dist = [[0]*n for _ in range(n)]
+
+  q = deque()
+  q.append((i, j))
+
+  while q:
+    x, y = q.popleft()
+    for k in range(4):
+      nx = x + dx[k]
+      ny = y + dy[k]
+
+      if 0 <= nx < n and 0 <= ny < n:
+        if visited[nx][ny] == 0:
+          if graph[nx][ny] <= size or graph[nx][ny] == 0:
+            q.append((nx, ny)) 
+            visited[nx][ny] = 1
+            dist[nx][ny] = dist[x][y] + 1
+          # 먹을 수 있는 물고기의 경우 추가
+          if graph[nx][ny] < size and graph[nx][ny] != 0:
+            can_eat.append((nx, ny, dist[nx][ny]))
+
+  if not can_eat:
+    return -1, -1, -1
+    
+  can_eat.sort(key=lambda x: (x[2], x[0], x[1]))
+  return can_eat[0][0], can_eat[0][1], can_eat[0][2]
+
+n = int(input())
+
+graph = [] 
+pos = []    # 아기 상어 위치
+for i in range(n):
+  data = list(map(int, input().split()))
+  graph.append(data)
+  for j in range(len(data)):
+    if data[j] == 9:
+      pos = [i, j]
+      graph[i][j] = 0
+      
+ans = 0
+exp = 0     # 현재 크기에서 먹은 물고기량
+size_ = 2   # 현재 물고기 크기
+while True:
+  x, y = pos[0], pos[1],
+  nx, ny, dist = bfs(x, y, size_)
+  if nx == -1:
+    break
+  graph[nx][ny] = 0
+  pos = [nx, ny]
+  exp += 1
+  if exp == size_:
+    exp = 0
+    size_ += 1
+  ans += dist
+
+print(ans)
