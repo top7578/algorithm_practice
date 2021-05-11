@@ -1,0 +1,43 @@
+#1. 제거되는 인덱스 계산
+import sys
+input = lambda : sys.stdin.readline().rstrip()
+
+def impossible(c):
+  if '0' in c:
+    return True
+  check = []
+  for x in c:
+    if x in check:
+      return True
+    check.append(x)
+  return False
+
+def sb(c, a):
+  if impossible(c):
+    return (-1, -1)
+  cnt_s = 0
+  cnt_b = 0
+  for i in range(3):
+    if c[i] == a[i]:
+      cnt_s += 1
+    elif c[i] in a:
+      cnt_b += 1
+  return (cnt_s, cnt_b)
+
+candidates = [str(x) for x in range(123, 988)]
+
+n = int(input())
+for _ in range(n):
+  a, s, b = input().split()
+  (s, b) = (int(s), int(b)) 
+
+  remove_cnt = 0    #1
+  for i in range(len(candidates)):
+    i -= remove_cnt
+    (s_, b_) = sb(candidates[i], a)
+
+    if (s, b) != (s_, b_):
+      del candidates[i]
+      remove_cnt += 1
+  
+print(len(candidates))
