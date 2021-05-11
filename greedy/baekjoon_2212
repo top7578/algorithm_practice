@@ -1,0 +1,19 @@
+import sys
+input = lambda : sys.stdin.readline().rstrip()
+
+n = int(input())
+k = int(input())
+
+sensors = list(set(map(int, input().split())))
+sensors.sort()
+
+distances = []    # 각 집중국 사이 거리 차 
+for i in range(len(sensors)-1):
+  distances.append(sensors[i+1]-sensors[i])
+distances.sort() 
+
+ans = 0
+for i in range(len(distances)-k+1):
+  ans += distances[i]
+
+print(ans)
