@@ -1,0 +1,18 @@
+import sys
+input = lambda : sys.stdin.readline().rstrip()
+
+for _ in range(int(input())):
+    n = int(input())
+    
+    data = list(map(int,input().split()))
+    
+    answer = 0 
+    max_ = data[-1]
+    for i in range(n-2,-1,-1):
+        #오늘 가격이 max라면 
+        if data[i] > max_:
+            max_ = data[i]
+        #오늘 가격이 최대가 아니라면 (최대-지금가격)만큼 더한다 
+        else:
+            answer += (max_ - data[i])
+    print(answer)
