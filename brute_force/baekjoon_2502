@@ -1,0 +1,23 @@
+import sys
+input = lambda : sys.stdin.readline().rstrip()
+
+first, second = 0, 0
+
+def before(cnt, now, next):
+  if cnt > d or now > next:
+    return
+
+  if cnt == d-1:
+    global first, second
+    first, second = now, next
+    return
+  
+  before(cnt+1, next-now, now)
+
+d, k = map(int, input().split())
+
+for i in range(k//2+1, k+1):
+  before(1, i, k)
+
+print(first)
+print(second)
