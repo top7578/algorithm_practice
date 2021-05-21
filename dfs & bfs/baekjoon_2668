@@ -1,0 +1,37 @@
+import sys
+input = lambda : sys.stdin.readline().rstrip()
+
+def dfs(v, path):
+  if v == path[0]:
+    return path
+
+  if not visited[v]:  
+    visited[v] = True
+    return dfs(graph[v], path + [v])
+
+n = int(input())
+
+graph = [0] * (n+1)
+
+for i in range(1, n+1):
+  graph[i] = int(input())
+
+ans = []
+check = []  # 자기 자신으로 바로 돌아오는 경우
+for i in range(1, n+1):
+  visited = [False] * (n+1)
+  visited[i] = True
+  p = dfs(graph[i], [i])
+  if p:
+    if len(p) == 1:
+      check += p
+    else:
+      if len(ans) < len(p):
+        ans = p
+
+ans += check
+ans.sort() 
+
+print(len(ans))
+for v in ans:
+  print(v)
