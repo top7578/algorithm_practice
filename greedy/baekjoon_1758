@@ -1,0 +1,16 @@
+import sys
+input = lambda : sys.stdin.readline().rstrip()
+
+n = int(input())
+
+tips = []
+for _ in range(n):
+  tips.append(int(input()))
+tips.sort(reverse=True)
+
+for i in range(n):
+  tips[i] -= i
+  if tips[i] < 0:
+    tips[i] = 0
+
+print(sum(tips))
