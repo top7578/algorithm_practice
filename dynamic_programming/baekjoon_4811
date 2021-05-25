@@ -1,0 +1,18 @@
+import sys
+input = lambda : sys.stdin.readline().rstrip()
+
+while True:
+  n = int(input())
+
+  if n == 0:
+    break
+  
+  d = [[0]*(n+1) for _ in range(n+1)]
+  for j in range(1, n+1):
+    d[0][j] = 1
+  
+  for i in range(1, n+1):
+    for j in range(i, n+1):
+      d[i][j] = d[i-1][j] + d[i][j-1]
+  
+  print(d[n][n])
