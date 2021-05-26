@@ -1,0 +1,18 @@
+from collections import deque
+import sys
+input = lambda : sys.stdin.readline().rstrip()
+
+t = int(input())
+for _ in range(t):
+  n = int(input())
+  cards = list(input().split())
+
+  ans = deque()
+  ans.append(cards[0])
+  for i in range(1, len(cards)):
+    card = cards[i]
+    if ans[0] < card:
+      ans.append(card)
+    else:
+      ans.appendleft(card)
+  print(''.join(ans))
