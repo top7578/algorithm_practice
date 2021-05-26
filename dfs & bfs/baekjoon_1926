@@ -1,0 +1,43 @@
+from collections import deque
+import sys
+input = lambda : sys.stdin.readline().rstrip()
+
+dx = [-1, 0, 1, 0]
+dy= [0, 1, 0, -1]
+
+def bfs(x, y):
+  q = deque()
+  q.append([x, y])
+  visited[x][y] = True
+  cnt = 1
+  while q:
+    x, y = q.popleft()
+    for i in range(4):
+      nx = x + dx[i]
+      ny = y + dy[i]
+      if 0 <= nx < n and 0 <= ny < m:
+        if board[nx][ny] == 1 and not visited[nx][ny]:
+          visited[nx][ny] = True
+          cnt += 1
+          q.append([nx, ny])
+  return cnt
+
+n, m = map(int, input().split())
+
+board = []
+for _ in range(n):
+  board.append(list(map(int, input().split())))
+
+visited = [[False]*m for _ in range(n)]
+
+size = []
+for i in range(n):
+  for j in range(m):
+    if board[i][j] == 1 and not visited[i][j]:
+      size.append(bfs(i, j))
+
+print(len(size))
+if len(size) != 0:
+  print(max(size))
+else:
+  print(0)
