@@ -1,0 +1,47 @@
+import sys
+input = lambda : sys.stdin.readline().rstrip()
+
+dx = [0, -1, 0, 1, 0]
+dy = [0, 0, 1, 0, -1]
+
+def check(x, y):
+  for i in range(5):
+    nx = x + dx[i]
+    ny = y + dy[i]
+    if 0 > nx or n <= nx or 0 > ny or n <= ny or visited[nx][ny]:
+      return False
+  return True
+
+def calculate(x, y):
+  result = 0
+  for i in range(5):
+    nx = x + dx[i]
+    ny = y + dy[i]
+    result += board[nx][ny]
+  return result
+
+def dfs(cost, cnt):
+  global answer
+  if cnt == 3:
+    answer = min(answer, cost)
+    return
+  for x in range(1, n-1):
+    for y in range(1, n-1):
+      if check(x, y):
+        for i in range(5):
+          nx = x + dx[i]
+          ny = y + dy[i]
+          visited[nx][ny] = True
+        dfs(cost+calculate(x, y), cnt+1)
+        for i in range(5):
+          nx = x + dx[i]
+          ny = y + dy[i]
+          visited[nx][ny] = False
+
+n = int(input())
+board = [list(map(int, input().split())) for _ in range(n)]
+visited = [[False]*n for _ in range(n)]
+
+answer = 987654321
+dfs(0, 0)
+print(answer)
