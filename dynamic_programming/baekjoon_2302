@@ -1,0 +1,27 @@
+import sys
+input = lambda : sys.stdin.readline().rstrip()
+
+n = int(input())
+m = int(input())
+
+vips = []
+for _ in range(m):
+  vips.append(int(input()))
+
+# dp[n-1] : 좌석을 옮기지 않는 경우
+# dp[n-2] : 좌석을 옮기는 경우
+d = [1, 1, 2]
+for i in range(3, 41):
+  d.append(d[i-2]+d[i-1])
+
+ans = 1
+if m < 1:
+  ans = d[n]
+else:
+  pre = 0
+  for i in range(m):
+    ans *= d[vips[i]-1-pre]
+    pre = vips[i]
+  ans *= d[n-pre]
+
+print(ans)
