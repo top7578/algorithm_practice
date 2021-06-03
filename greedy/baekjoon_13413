@@ -1,0 +1,19 @@
+import sys
+input = lambda : sys.stdin.readline().rstrip()
+
+t = int(input())
+for _ in range(t):
+  n = int(input())
+  start = input()
+  goal = input()
+  
+  cnt_b = 0
+  cnt_w = 0
+  for i in range(len(start)):
+    if start[i] != goal[i]:
+      if start[i] == 'B':
+        cnt_b += 1
+      else:
+        cnt_w += 1
+
+  print(max(cnt_b, cnt_w))
