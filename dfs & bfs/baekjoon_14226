@@ -1,0 +1,26 @@
+from collections import deque
+import sys
+input = lambda : sys.stdin.readline().rstrip()
+
+def bfs(screen, save, ans):
+  q = deque()
+  q.append([screen, save, ans])
+  visited = [[False]*1001 for _ in range(1001)]
+  while q:
+    screen, save, ans = q.popleft()
+    if screen == s:
+      return ans
+
+    if screen > 1000 or screen < 0  or save > 1000 or save < 0:
+      continue
+
+    if not visited[screen][save]:
+      q.append([screen, screen, ans+1])
+      q.append([screen+save, save, ans+1])
+      q.append([screen-1, save, ans+1])
+      visited[screen][save] = True
+
+s = int(input())
+
+sc = 1
+print(bfs(sc, 0, 0))
