@@ -1,0 +1,23 @@
+from itertools import combinations
+import sys
+input = lambda : sys.stdin.readline().rstrip()
+
+n = int(input())
+
+ans = 0
+bef_h = 0
+for i in range(n):
+  data = list(map(int, input().split()))
+
+  candidates = list(combinations(data, 3))
+
+  h = 0 #각 data에서 일의 자리 수
+  for c in candidates:
+    if h < sum(c)%10:
+      h = sum(c)%10       
+
+  if bef_h <= h:
+    bef_h = h
+    ans = i+1
+
+print(ans)
