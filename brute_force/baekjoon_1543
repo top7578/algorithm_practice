@@ -1,0 +1,18 @@
+import sys
+input = lambda : sys.stdin.readline().rstrip()
+
+s = input()
+find = input()
+
+ans = 0
+i = 0
+while True:
+  if i >= len(s):
+    break
+  if s[i:i+len(find)] == find:
+    ans += 1
+    i += len(find)
+  else:
+    i += 1
+
+print(ans)
