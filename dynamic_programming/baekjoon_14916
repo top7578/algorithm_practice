@@ -1,0 +1,18 @@
+import sys
+input = lambda : sys.stdin.readline().rstrip()
+
+n = int(input()) 
+
+d = [987654321]*100001
+d[0] = 0
+
+coins = [2, 5]
+
+for i in range(2):
+  for j in range(coins[i], n+1):
+    d[j] = min(d[j], d[j-coins[i]] + 1)
+
+if d[n] == 987654321:
+  print(-1)
+else:
+  print(d[n])
