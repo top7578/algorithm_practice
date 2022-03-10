@@ -1,0 +1,13 @@
+n = int(input())
+
+prices = list(map(int, input().split()))
+
+prices.sort()
+
+ans = 0
+time = 0
+for p in prices:
+  time += p
+  ans += time
+
+print(ans)
