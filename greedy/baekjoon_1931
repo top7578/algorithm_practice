@@ -1,0 +1,17 @@
+n = int(input())
+
+classes = []
+for _ in range(n):
+  s, e = map(int, input().split()) 
+  classes.append((s, e))
+
+classes.sort(key = lambda x: (x[1], x[0]))
+
+ans = 0
+time = 0
+for c in classes:
+  if c[0] >= time:
+    ans += 1
+    time = c[1]
+
+print(ans)
