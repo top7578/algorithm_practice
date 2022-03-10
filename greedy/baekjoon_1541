@@ -1,0 +1,11 @@
+num_list = []
+for s1 in input().split('-'):
+  tmp = 0
+  for s2 in s1.split('+'):
+    tmp += int(s2)
+  num_list.append(tmp)
+
+ans = num_list[0]
+for i in range(1, len(num_list)):
+  ans -= num_list[i]
+print(ans)
