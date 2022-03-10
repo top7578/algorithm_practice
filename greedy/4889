@@ -1,0 +1,25 @@
+idx = 1
+while True:
+  ans = 0
+
+  stack = 0
+  input_data = input()
+  if '-' in input_data:
+    break
+
+  for c in input_data:
+    if c == '{':
+      stack += 1
+    elif c == '}':
+      #스택에 '{' 문자 들어있는 경우
+      if stack <= 0:
+        ans += 1 #'{'로 문자 변환
+        stack += 1
+      else:
+        stack -= 1
+
+  #스택에 문자 남아있는 경우
+  ans += (stack)//2  
+
+  print(str(idx)+'. '+ str(ans))
+  idx += 1
