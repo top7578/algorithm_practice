@@ -1,0 +1,17 @@
+n, m = map(int, input().split())
+
+prices = []
+for _ in range(m):
+  prices.append(int(input()))
+
+prices.sort(reverse=True)
+
+max_n = min(n, m)  #팔 수 있는 최대 달걀의 수
+
+ans = -1  #최대 수익
+idx = -1  #책정한 가장 낮은 가격
+for i in range(max_n):
+  if ans <= prices[i] * (i+1):
+    idx = i
+    ans = max(ans, prices[i] * (i+1)) 
+print(prices[idx], ans)
