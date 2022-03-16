@@ -1,0 +1,40 @@
+# 위상 정렬 : 방향 그래프의 모든 노드를 방향성에 거스르지 않도록 순서대로 나열하는 것
+
+from collections import deque
+
+n = int(input())
+
+indegree = [0] * (n+1)  #진입차수
+times = [0] * (n+1)     #각 작업 소요 시간
+     
+graph = [
+  []
+  for i in range(n+1)
+]
+
+for i in range(1, n+1):
+  lst = list(map(int, input().split()))
+
+  times[i] = lst[0]
+  for j in range(lst[1]):
+    graph[lst[2+j]].append(i)
+    indegree[i] += 1 
+
+q = deque()
+
+ans = [0] * (n+1) 
+# 진입 차수 0인 노드 찾기
+for i in range(1, n+1):
+  if indegree[i] == 0:
+    q.append(i)
+    ans[i] = times[i]
+
+while q:
+  now = q.popleft()
+  for i in graph[now]:
+    indegree[i] -= 1
+    ans[i] = max(ans[i], times[i]+ans[now])
+    if indegree[i] == 0:
+      q.append(i)
+
+print(max(ans))
