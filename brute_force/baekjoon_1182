@@ -1,0 +1,15 @@
+from itertools import combinations
+
+n, s = map(int, input().split())
+
+lst = list(map(int, input().split()))
+
+ans = 0
+# 후보 리스트 구하기
+for i in range(1, n+1):
+    for c in list(combinations(lst, i)):
+        # 합 0 되는지 확인
+        if sum(c) == s:
+            ans += 1
+            
+print(ans)
