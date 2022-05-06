@@ -1,0 +1,14 @@
+def check_square_root(n):
+    if (n**0.5).is_integer():
+        return True
+    return False
+
+def solution(n):
+    answer = 0
+    #제곱인지 확인해서 제곱이면 True 아니면 False
+    if check_square_root(n):
+        answer = (n**0.5 + 1) * (n**0.5 + 1)
+    else:
+        answer = -1
+
+    return answer
