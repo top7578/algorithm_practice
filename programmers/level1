@@ -1,0 +1,8 @@
+def make_reverse_lst(x):
+    str_list = list(str(x))
+    int_list = list(map(int, str_list))
+    return int_list[::-1]
+
+def solution(n):
+    answer = make_reverse_lst(n)
+    return answer
