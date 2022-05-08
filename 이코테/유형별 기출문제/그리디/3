@@ -1,0 +1,23 @@
+# 이코테 - 유형별 기출 문제
+# 그리디
+# 03.문자열 뒤집기
+def check_is_same(a, b):
+  if a==b:
+    return True
+  else:
+    return False
+
+s = list(map(int, input()))
+
+group = [0, 0]
+
+ex_val = s[0]
+group[ex_val] += 1
+
+for i in range(1, len(s)):
+  #전 값이랑 다른값인지
+  if not check_is_same(ex_val, s[i]):
+    group[s[i]] += 1
+    ex_val = s[i]
+
+print(min(group))
