@@ -1,0 +1,21 @@
+# 이코테 - 유형별 기출 문제
+# 그리디
+# 02.곱하기 혹은 더하기
+from collections import deque
+
+def make_largest_val(a1, a2):
+  if a1 in [0, 1] or a2 in [0, 1]:  #책 풀이 : a1 <= 1
+    return a1+a2
+  else:
+    return a1*a2
+
+s = list(map(int, input()))
+
+q = deque(s)
+while (len(q) > 1):
+  a1 = q.popleft()
+  a2 = q.popleft()
+  new_val = make_largest_val(a1, a2)
+  q.appendleft(new_val)
+  
+print(q[0])
