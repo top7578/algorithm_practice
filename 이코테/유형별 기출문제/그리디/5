@@ -6,7 +6,7 @@ n, m = map(int, input().split())
 
 weights = list(map(int, input().split()))
 
-cnt_weights_lst = [0] * (m+1)
+cnt_weights_lst = [0] * (m+1)   # 같은 무게 몇개 있는지 알고 싶다(게다가 ) -> 리스트
 
 for w in weights:
     cnt_weights_lst[w] += 1
