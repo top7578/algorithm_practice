@@ -1,0 +1,19 @@
+# 이코테 - 유형별 기출 문제
+# 그리디
+# 01.모험가 길드
+n = int(input())
+
+fear_state_lst = list(map(int, input().split()))
+fear_state_lst.sort()
+
+ans = 0 #최대 그룹 수
+
+group_people = 0
+for fear in fear_state_lst:
+    group_people += 1
+
+    if fear == group_people:
+        ans += 1
+        group_len = 0
+
+print(ans)
