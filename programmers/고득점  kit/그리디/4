@@ -1,0 +1,45 @@
+#
+# 프로그래머스 고득점 Kit
+# 그리디
+# 04.구명보트
+#
+
+from collections import deque
+
+def solution(people, limit):
+    
+    people.sort()
+    q = deque(people)
+
+    ans = 0     # 필요한 구명보트 개수
+    while q:
+        if len(q) == 0:
+            break
+        elif len(q) == 1:
+            ans += 1
+            break
+        
+        p1 = q.popleft()    #몸무게 작은 사람
+        p2 = q.pop()        #몸무게 큰 사람
+
+        if p1+p2 <= limit:
+            ans += 1
+        else:
+            ans += 1
+            q.appendleft(p1)
+    return ans
+
+"""
+def solution(people, limit):
+    people.sort()
+    cnt = 0;
+    i=0;
+    j=len(people)-1
+    while i<=j:
+        cnt+=1
+        if people[j]+people[i]<=limit:
+            i+=1
+        j-=1
+    return cnt
+
+"""
