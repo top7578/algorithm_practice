@@ -1,0 +1,49 @@
+#
+# 프로그래머스 고득점 Kit
+# 그리디
+# 02.조이스틱
+# 실패
+#
+
+def get_min_move(x):
+  min_move = 0
+  # 위로 or 아래 중에 작은 이동
+  min_move = min(ord(x)-ord('A'), ord('Z')-ord(x)+1)
+  return min_move
+
+def solution(name):
+  ans = 987654321    #조작 횟수 최솟값
+
+  first_alp = get_min_move(name[0])
+  
+  # front
+  frnt = first_alp
+  right_left_move = 1   # 옆으로 움직이는 횟
+  for i in range(1, len(name)):
+    up_down_move = get_min_move(name[i])
+    frnt += up_down_move
+    # 해당 자리 'A'아닌 경우
+    if up_down_move != 0:
+      frnt += right_left_move
+      right_left_move=0
+      
+    right_left_move+=1
+
+  ans = min(ans, frnt)
+
+  # back
+  bck = first_alp
+  right_left_move = 1
+  for i in range(len(name)-1, 0, -1):
+    up_down_move = get_min_move(name[i])
+    bck += up_down_move
+    # 해당 자리 'A'아닌 경우
+    if up_down_move != 0:
+      bck += right_left_move
+      right_left_move=0
+      
+    right_left_move+=1
+ 
+  ans = min(ans, bck)
+
+  return ans
