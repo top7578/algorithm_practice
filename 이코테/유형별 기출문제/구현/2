@@ -2,6 +2,7 @@
 # 이코테 - 유형별 기출 문제
 # 구현
 # 02.문자열 재정렬
+# digit_sum=0인 case는 출력하면 안됨
 #
 
 s = input()
@@ -17,4 +18,9 @@ for x in s:
 
 alp_lst.sort()
 
-print("".join(alp_lst) + str(digit_sum))
+if digit_sum != 0:
+  ans = "".join(alp_lst) + str(digit_sum)
+else:
+  ans = "".join(alp_lst)
+  
+print(ans)
