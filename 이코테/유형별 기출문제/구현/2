@@ -1,0 +1,20 @@
+#
+# 이코테 - 유형별 기출 문제
+# 구현
+# 02.문자열 재정렬
+#
+
+s = input()
+
+alp_lst = []
+digit_sum = 0
+
+for x in s:
+  if x.isalpha():
+    alp_lst.append(x)
+  else:
+    digit_sum += int(x)
+
+alp_lst.sort()
+
+print("".join(alp_lst) + str(digit_sum))
