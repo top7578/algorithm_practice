@@ -1,0 +1,17 @@
+#
+# 이코테 - 유형별 기출 문제
+# 구현 
+# 06.럭키 스트레이트
+#
+
+n = input()
+
+length = len(n)
+
+left = sum(list(map(int, n[:length//2])))
+right = sum(list(map(int, n[length//2:])))
+
+if left == right:
+    print("LUCKY")
+else:
+    print("READY")
