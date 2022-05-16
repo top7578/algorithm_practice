@@ -1,0 +1,46 @@
+#
+# 이코테 - 유형별 기출 문제
+# 구현 
+# 09.문자열 압축
+#
+
+def solution(s):
+    ans = len(s)
+
+    total_steps = len(s)//2
+    #확인하는 문자 개수
+    for step in range(2, total_steps+1):
+        
+        ex = s[:step]   # 전 문자열
+        ex_cnt = 1      # 연속 문자열 갯수
+        tmp =  ''       # 해당 step 압축 문자열
+        for i in range(step, len(s), step):
+            now = s[i:i+step]
+            #print(i, now)
+            # 전 문자열과 같은 case
+            if now == ex:
+                ex_cnt += 1
+            else:
+                if ex_cnt == 1:
+                    tmp += ex
+                else:
+                    tmp += (str(ex_cnt) + ex)
+                ex = now
+                ex_cnt = 1
+
+        #끝난 후 남은 문자열 출력        
+        if ex_cnt == 1:
+            tmp += ex
+        else:
+            tmp += (str(ex_cnt) + ex)
+
+
+        ans = min(ans, len(tmp))
+
+    return ans
+
+print(solution('aabbaccc'))
+
+
+
+    
