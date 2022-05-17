@@ -1,0 +1,83 @@
+#
+# 이코테 - 유형별 기출 문제
+# 구현 
+# 12.
+#
+
+from collections import deque
+
+n = int(input())
+
+board =[
+    [0]*(n+1) for _ in range(n+1)
+] 
+
+k = int(input())
+for i in range(k):
+    x, y = map(int, input().split())
+    board[x][y] = 1
+
+l = int(input())
+dir_change_lst = deque([])
+for i in range(l):
+    time, d = input().split()
+    dir_change_lst.append((int(time), d))
+
+# 북, 동, 남, 서
+dx = [-1, 0, 1, 0]
+dy = [0, 1, 0, -1]
+
+x, y = 1, 1
+direction = 1
+
+def is_gameover(x, y):
+    if not 1 <= x <= n or not 1 <= y <= n:
+        return True
+    if (x, y) in q:
+        return True
+    return False
+
+ans = 0     #게임이 끝난 시간
+snake_lst = [(1, 1)]
+q = deque(snake_lst)
+while True:
+    nx = x + dx[direction]
+    ny = y + dy[direction]
+
+    # 게임 종료
+    if is_gameover(nx, ny):
+        break
+    
+    #뱀 위치 추가
+    q.append((nx, ny))
+
+    #사과 check - 없으면 popleft()
+    if board[nx][ny] != 1:
+        q.popleft()
+    #사과 check - 사과 있으면 board -> 0
+    else:
+        board[nx][ny] = 0
+    
+    # 방향 전환 시간되면 방향 전환
+    if len(dir_change_lst) != 0:
+        if ans == dir_change_lst[0][0]:
+            if dir_change_lst[0][1] == 'D':
+                direction += 1
+            else:
+                direction -= 1
+            dir_change_lst.popleft()
+            
+            # -1 이거나 4넘어가면 맞춰주기
+            if direction == -1:
+                direction = 3
+            elif direction == 4:
+                direction = 0
+    
+    print(ans, q)
+    print(board)
+    print("-----------------------------")
+
+    x, y = nx, ny
+    ans += 1
+
+print(ans)
