@@ -1,83 +1,42 @@
 #
 # 이코테 - 유형별 기출 문제
 # 구현 
-# 12.
+# 12. 기둥과 보 설치
+# O(N^3)
 #
+def possible(answer):
+    for x, y, a in answer:
+        #기둥
+        if a == 0:
+            if (y == 0) or ([x, y, 1] in answer) or ([x-1, y, 1] in answer) or ([x, y-1, 0] in answer):
+                continue
+            return False
+        #보
+        elif a == 1:
+            if ([x+1, y-1, 0] in answer) or ([x, y-1, 0] in answer) or ([x-1, y, 1] in answer and [x+1, y, 1] in answer):
+                continue
+            return False
+    return True
 
-from collections import deque
+def solution(n, build_frame):
+    answer = []
 
-n = int(input())
+    for work in build_frame:
+        x, y, a, b = work
 
-board =[
-    [0]*(n+1) for _ in range(n+1)
-] 
+        #설치,삭제 가능한지 확인 후 가능하다면 작업 진행
+        #삭제
+        if b == 0:
+            answer.remove([x, y, a])
+            if not possible(answer):
+                answer.append([x, y, a])
+        
+        #설치
+        elif b == 1:
+            answer.append([x, y, a])
+            if not possible(answer):
+                answer.remove([x, y, a])
 
-k = int(input())
-for i in range(k):
-    x, y = map(int, input().split())
-    board[x][y] = 1
+    answer.sort(key=lambda x:(x[0], x[1], x[2]))
 
-l = int(input())
-dir_change_lst = deque([])
-for i in range(l):
-    time, d = input().split()
-    dir_change_lst.append((int(time), d))
-
-# 북, 동, 남, 서
-dx = [-1, 0, 1, 0]
-dy = [0, 1, 0, -1]
-
-x, y = 1, 1
-direction = 1
-
-def is_gameover(x, y):
-    if not 1 <= x <= n or not 1 <= y <= n:
-        return True
-    if (x, y) in q:
-        return True
-    return False
-
-ans = 0     #게임이 끝난 시간
-snake_lst = [(1, 1)]
-q = deque(snake_lst)
-while True:
-    nx = x + dx[direction]
-    ny = y + dy[direction]
-
-    # 게임 종료
-    if is_gameover(nx, ny):
-        break
-    
-    #뱀 위치 추가
-    q.append((nx, ny))
-
-    #사과 check - 없으면 popleft()
-    if board[nx][ny] != 1:
-        q.popleft()
-    #사과 check - 사과 있으면 board -> 0
-    else:
-        board[nx][ny] = 0
-    
-    # 방향 전환 시간되면 방향 전환
-    if len(dir_change_lst) != 0:
-        if ans == dir_change_lst[0][0]:
-            if dir_change_lst[0][1] == 'D':
-                direction += 1
-            else:
-                direction -= 1
-            dir_change_lst.popleft()
-            
-            # -1 이거나 4넘어가면 맞춰주기
-            if direction == -1:
-                direction = 3
-            elif direction == 4:
-                direction = 0
-    
-    print(ans, q)
-    print(board)
-    print("-----------------------------")
-
-    x, y = nx, ny
-    ans += 1
-
-print(ans)
+    return answer
