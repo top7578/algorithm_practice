@@ -1,0 +1,39 @@
+#
+# 이코테 - 유형별 기출 문제
+# 구현 
+# 13. 치킨 배달
+#
+
+from itertools import combinations
+
+n, m = map(int, input().split())
+
+house_poses = []
+chicken_poses = []
+
+for i in range(n):
+    lst = list(map(int, input().split()))
+    for j in range(len(lst)):
+        if lst[j] == 1:
+            house_poses.append((i, j))
+        elif lst[j] == 2:
+            chicken_poses.append((i, j))
+
+def get_sum(candidates):
+    tmp = 0
+    for house_pos in house_poses:
+        chicken_dis = 987654321
+        #각 집에서 치킨거리 확인
+        for candidate in candidates:
+            chicken_dis = min(chicken_dis, abs(candidate[0]-house_pos[0]) + abs(candidate[1]-house_pos[1]))
+
+        tmp += chicken_dis
+
+    return tmp
+
+
+ans = 987654321
+for c in list(combinations(chicken_poses, m)):
+    ans = min(ans, get_sum(c))
+
+print(ans)
