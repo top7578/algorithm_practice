@@ -1,0 +1,14 @@
+#
+# 이코테 - 유형별 기출 문제
+# 정렬 
+# 24. 안테나
+#
+
+n = int(input())
+
+houses = list(map(int, input().split()))
+houses.sort()
+
+mid = (len(houses)-1) // 2
+
+print(houses[mid])
