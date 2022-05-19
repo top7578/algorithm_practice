@@ -1,0 +1,27 @@
+#
+# 이코테 - 유형별 기출 문제
+# 정렬 
+# 26. 카드 정렬하기
+# len(cards) == 1 일때 0이어야 함
+#
+
+import heapq
+
+n = int(input())
+
+cards = []
+for i in range(n):
+    heapq.heappush(cards, int(input()))
+
+ans = 0
+while True:
+    if len(cards) == 1:
+        break
+
+    a = heapq.heappop(cards)
+    b = heapq.heappop(cards)
+    ans += (a+b)
+    
+    heapq.heappush(cards, a+b)
+
+print(ans)
