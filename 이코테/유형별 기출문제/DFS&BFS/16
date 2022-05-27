@@ -1,0 +1,69 @@
+#
+# 이코테 - 유형별 기출 문제
+# DFS/BFS
+# 16. 연구소
+#
+
+n, m = map(int, input().split())
+
+board = [
+    list(map(int, input().split())) for _ in range(n) 
+]
+
+temp = [
+    [0] * m for _ in range(n)
+]
+
+dx = [-1, 0, 1, 0]
+dy = [0, 1, 0, -1]
+
+ans = 0
+
+def spread(x, y):
+    for i in range(4):
+        nx = x + dx[i]
+        ny = y + dy[i]
+
+        if nx >= 0 and nx < n and ny >= 0 and ny < m:
+            if temp[nx][ny] == 0:
+                temp[nx][ny] = 2
+                spread(nx, ny)
+
+def get_safe_zone():
+    score = 0
+    for i in range(n):
+        for j in range(m):
+            if temp[i][j] == 0:
+                score += 1
+    return score
+
+def dfs(count):
+    global ans
+    # 울타리가 3개 설치된 경우
+    if count == 3:
+        for i in range(n):
+            for j in range(m):
+                temp[i][j] = board[i][j]
+        
+        # 각 바이러스의 위치에서 전파 진행
+        for i in range(n):
+            for j in range(m):
+                if temp[i][j] == 2:
+                    spread(i, j)
+        
+        # 안전 영역의 최댓값 계산
+        ans = max(ans, get_safe_zone())
+        return
+
+    # 빈 공간에 울타리 설치
+    for i in range(n):
+        for j in range(m):
+            if board[i][j] == 0:
+                board[i][j] = 1
+                count += 1
+                dfs(count)
+                board[i][j] = 0
+                count -= 1
+
+dfs(0)
+print(ans)
