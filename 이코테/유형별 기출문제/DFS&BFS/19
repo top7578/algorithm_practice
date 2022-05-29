@@ -1,0 +1,45 @@
+#
+# 이코테 - 유형별 기출 문제
+# DFS/BFS
+# 19. 연산자 끼워 넣기
+# -4.5 // 2 => -3, int(-4.5 / 2) => -2
+#
+
+n = int(input())
+data = list(map(int, input().split()))
+oper = list(map(int, input().split()))
+
+max_ = -987654321
+min_ = 987654321
+
+def dfs(cnt, ans):
+    global max_, min_
+    if cnt == n-1:
+        max_ = max(ans, max_)
+        min_ = min(ans, min_)
+        return
+
+    if oper[0] != 0:
+        oper[0] -= 1
+        dfs(cnt+1, ans+data[cnt+1])
+        oper[0] += 1
+
+    if oper[1] != 0:
+        oper[1] -= 1
+        dfs(cnt+1, ans-data[cnt+1])
+        oper[1] += 1
+
+    if oper[2] != 0:
+        oper[2] -= 1
+        dfs(cnt+1, ans*data[cnt+1])
+        oper[2] += 1 
+    
+    if oper[3] != 0:
+        oper[3] -= 1
+        dfs(cnt+1, int(ans/data[cnt+1]))
+        oper[3] += 1
+    
+dfs(0, data[0])
+
+print(max_)
+print(min_)
