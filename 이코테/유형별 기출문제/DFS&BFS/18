@@ -1,0 +1,51 @@
+#
+# 이코테 - 유형별 기출 문제
+# DFS/BFS
+# 18. 괄호 변환
+#
+
+def get_balanced_str_idx(s):
+    cnt = 0
+    for i in range(len(s)):
+        if s[i] == '(':
+            cnt += 1
+        else:
+            cnt -= 1
+
+        if cnt == 0:
+            return i
+
+def is_correct_str(s):
+    stack = []
+    for c in s:
+        if c == '(':
+            stack.append('(')
+        else:
+            if len(stack) <= 0:
+                return False
+            stack.pop()
+    return True
+            
+def reverse_str(s):
+    tmp = ""
+    for c in s:
+        if c == '(':
+            tmp += ')'
+        else:
+            tmp += '('
+    return tmp
+
+
+def solution(p):
+    ans = ""
+    if p == "":
+        return ans
+
+    idx = get_balanced_str_idx(p)
+    u = p[:idx+1]
+    v = p[idx+1:]
+    if is_correct_str(u):
+        ans = u + solution(v)
+    else:
+        ans = "(" + solution(v) + ")" + reverse_str(u[1:-1])  
+    return ans
