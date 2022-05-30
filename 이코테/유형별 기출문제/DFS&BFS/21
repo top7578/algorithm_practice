@@ -2,7 +2,9 @@
 # 이코테 - 유형별 기출 문제
 # DFS/BFS
 # 21. 인구 이동
+# deque((a, b)) -> deque([(a, b)])
 #
+
 from collections import deque
 
 n, l, r = map(int, input().split())
