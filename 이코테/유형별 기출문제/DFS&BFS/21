@@ -1,0 +1,65 @@
+#
+# 이코테 - 유형별 기출 문제
+# DFS/BFS
+# 21. 인구 이동
+#
+from collections import deque
+
+n, l, r = map(int, input().split())
+
+a = [
+    list(map(int, input().split()))
+    for _ in range(n)
+]
+
+dx = [-1, 0, 1, 0]
+dy = [0, 1, 0 ,-1]
+
+def union(x, y):
+    global contry
+
+    cnt = 1                 # 연합 국가 수
+    sum_ = a[x][y]          # 연합 전체 인구 수
+    united = [(x, y)]       # 연합 국가 위치
+    q = deque()
+    q.append((x, y))
+    unioned_contry[x][y] = contry
+    while q:
+        x, y = q.popleft()
+        for i in range(4):
+            nx = x + dx[i]
+            ny = y + dy[i]
+
+            if 0 > nx or n <= nx or 0 > ny or n <= ny or unioned_contry[nx][ny] != -1:
+                continue
+            
+            if l <= abs(a[x][y] - a[nx][ny]) <= r:
+                unioned_contry[nx][ny] = contry
+                cnt += 1
+                united.append((nx, ny))
+                sum_ += a[nx][ny]
+                q.append((nx, ny))
+
+    for (i, j) in united:
+        a[i][j] = sum_ // cnt
+        
+ans = 0
+while True:
+    unioned_contry = [
+        [-1 for _ in range(n)]
+        for _ in range(n)
+    ]
+
+    contry = 0
+    for i in range(n):
+        for j in range(n):
+            if unioned_contry[i][j] == -1:
+                union(i, j)
+                contry += 1
+
+    if contry == n*n:
+        break
+
+    ans += 1
+
+print(ans)
