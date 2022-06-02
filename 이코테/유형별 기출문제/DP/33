@@ -1,0 +1,23 @@
+#
+# 이코테 - 유형별 기출 문제
+# DP
+# 33. 퇴사
+#
+
+n = int(input())
+
+t_lst = [0]
+p_lst = [0]
+for _ in range(n):
+    t, p = map(int, input().split())
+    t_lst.append(t)
+    p_lst.append(p)
+
+dp = [0] * (n+2)
+
+for i in range(n, 0, -1):
+    if i + t_lst[i] <= n+1:
+        dp[i] = max(dp[i+1], p_lst[i] + dp[i + t_lst[i]])
+    else:
+        dp[i] = dp[i+1]
+print(dp[1])
