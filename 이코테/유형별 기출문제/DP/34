@@ -1,0 +1,27 @@
+#
+# 이코테 - 유형별 기출 문제
+# DP
+# 34. 병사 배치하기
+#
+
+"""
+1. 시간 복잡도 : 
+    1.1 완전탐색 : O(2^n) 
+        1 <= n <= 2000 이므로 완전 탐색을 진행할 경우 시간 초과
+    1.2 DP : O(n^2)    
+2. 아이디어 : 가장 긴 증가하는 부분 수열
+3. dp[i] : power[i]를 마지막 원소로 가지는 부분 수열의 최대 길이 
+"""
+
+n = int(input())
+power = list(map(int, input().split()))
+
+dp = [1] * n
+
+for i in range(n):
+    for j in range(i):
+        # i번째가 j번째 power값보다 작으면 + 1
+        if power[i] < power[j]:
+            dp[i] = max(dp[i], dp[j]+1)
+
+print(n - max(dp))
