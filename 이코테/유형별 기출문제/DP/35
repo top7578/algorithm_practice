@@ -1,0 +1,37 @@
+#
+# 이코테 - 유형별 기출 문제
+# DP
+# 35. 못생긴 수
+#
+
+"""
+1. 시간 복잡도 : 
+    1.1 완전탐색 : 
+        n(1<= n <= 1,000)번째 못생긴 수가 언제 나올지 알 수 없다
+    1.2 DP : O(n) : n번째 수 * O(n) : h에 next 수 있는지 확인    
+2. 아이디어 : i번째 못생긴 수에 2,3,5배 해나간다. 
+3. dp[i] : i+1번째 못생긴 수 
+"""
+import heapq
+
+n = int(input())
+
+dp = [-1] * n
+dp[0] = 1
+
+h = [1]
+
+i = 0
+while True:
+    if dp[n-1] != -1:
+        break
+
+    dp[i] = heapq.heappop(h)
+    nexts = [dp[i]*k for k in [2,3,5]]
+    for next in nexts:
+        if next not in h:
+            heapq.heappush(h, next)
+
+    i += 1
+    
+print(dp[n-1])
