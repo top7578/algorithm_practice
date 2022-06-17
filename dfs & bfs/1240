@@ -1,0 +1,44 @@
+#
+# 백준 
+# DFS / BFS
+# 1240. 노드사이의 거리 (골드 5)
+#
+"""
+아이디어 : 트리에서는 임의의 두 노드 간의 경로가 오직 1개
+따라서 BFS가 아닌 DFS로도 간단히 최단 거리 계산 가능 (트리 자료구조, 사이클 판별)
+"""
+
+from collections import deque
+
+def get_distance(s, e):
+    visited = [False] * (n+1)
+    q = deque([(s, 0)])
+    visited[s] = True
+
+    while q:
+        now, now_d = q.popleft()
+        for next, d in graph[now]:
+            if not visited[next]:
+                next_d = now_d + d 
+                if next == e:
+                    return next_d
+                else:
+                    q.append((next, next_d))
+                    visited[next] = True
+
+
+n, m = map(int, input().split())
+
+graph = [
+    []
+    for _ in range(n+1)
+]
+for _ in range(n-1):
+    n1, n2, d = map(int, input().split())
+    graph[n1].append((n2, d))
+    graph[n2].append((n1, d))
+
+for _ in range(m):
+    s, e = map(int, input().split())
+
+    print(get_distance(s, e))
