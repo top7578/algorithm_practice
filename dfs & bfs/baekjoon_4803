@@ -1,0 +1,57 @@
+#
+# 백준 
+# DFS / BFS
+# 4803. 트리 (골드4)
+#
+"""
+아이디어 : 하나의 그래프 안에 포함된 트리(tree)의 개수를 세는 문제 -> DFS 사용
+cf) 트리: 사이클이 없는 연결 요소
+is_cycle() -> 이전에 방문했는데 스택에 남아있으면(next != prev) cycle 발생
+"""
+
+import sys
+sys.setrecursionlimit(10**5)
+input = sys.stdin.readline
+
+def is_cycle(now, prev):
+    visited[now] = True
+    for next in graph[now]:
+        if not visited[next]:
+            if is_cycle(next, now):
+                return True
+        elif next != prev:  #방문 했는데 이전 노드가 아니라면
+            return True
+    return False
+
+
+t = 1
+while True:
+    n, m = map(int, input().split())
+
+    if (n, m) == (0, 0):
+        break
+
+    graph = [
+        []
+        for _ in range(n+1)
+    ]
+    for _ in range(m):
+        n1, n2 =  map(int, input().split())
+        graph[n1].append(n2)
+        graph[n2].append(n1)
+    
+    visited = [False] * (n+1)
+
+    ans = 0 #그래프 내 트리 갯수
+    for i in range(1, n+1):
+        if not visited[i] and not is_cycle(i, 0):   #연결 요소이면서 사이클 아니면 트리  
+            ans += 1
+
+    if ans > 1:
+        print(f"Case {t}: A forest of {ans} trees.")
+    elif ans == 1:
+        print(f"Case {t}: There is one tree.")
+    else:
+        print(f"Case {t}: No trees.")
+    
+    t += 1
