@@ -1,0 +1,39 @@
+#
+# 백준 
+# DFS / BFS
+# 1679. 숨바꼭질 (실1)
+#
+"""
+아이디어 : bfs를 사용하여 최단 거리 탐색 + DP(중복 계산 피하기)
+CP : 범위 잘 확인하자 -> N(0 <= N <= 100000) : 0 포함하지 않아 틀림
+"""
+from collections import deque
+
+max_ = 987654321
+
+n, k = map(int, input().split())
+
+pos = [max_] * (100001)
+
+q = deque([n])
+pos[n] = 0
+while q:
+    now = q.popleft()
+
+    if now == k:
+        break
+    
+    #아직 방문 X
+    if now-1>-1 and pos[now-1] == max_:
+        q.append(now-1)
+        pos[now-1] = min(pos[now-1], pos[now]+1)
+
+    if now+1<100001 and pos[now+1] == max_:
+        q.append(now+1)
+        pos[now+1] = min(pos[now+1], pos[now]+1)
+
+    if now*2<100001 and pos[now*2] == max_:
+        q.append(now*2)
+        pos[now*2] = min(pos[now*2], pos[now]+1)
+    
+print(pos[now])
