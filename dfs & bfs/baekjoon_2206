@@ -1,0 +1,56 @@
+#
+# 백준 
+# DFS / BFS
+# 2206. 벽 부수고 이동하기 (골4)
+#
+"""
+아이디어 : 가중치가 동일한 그래프에서의 최단 경로 -> BFS, 현재 상태를 방문 정보 테이블에 기록
+visited[세로 좌표][가로 좌표][벽을 부순 적이 있는지]
+CP: 3차원 배열을 사용하여 현재 상태를 기록, 3차원 배열(visited) 표현하기
+"""
+from collections import deque
+
+n, m = map(int, input().split())
+
+board = [
+    list(map(int, input()))
+    for _ in range(n)
+]
+
+visited = [
+    [
+        [0] * 2 
+        for _ in range(m)
+    ] 
+    for _ in range(n)
+]
+
+dx = [-1, 0, 1, 0]
+dy = [0, 1, 0, -1]
+
+def dfs(x, y, z):
+    q = deque([(x, y, z)])
+    visited[x][y][z] = 1
+    while q:
+        x, y, z = q.popleft() 
+
+        if (x, y) == (n-1, m-1):
+            return visited[x][y][z]
+        
+        for i in range(4):
+            nx = x + dx[i]
+            ny = y + dy[i]
+
+            if (0 <= nx < n) and (0 <= ny < m) and visited[nx][ny][z] == 0:
+                #다음이 벽X
+                if board[nx][ny] == 0:
+                    q.append((nx, ny, z))
+                    visited[nx][ny][z] = visited[x][y][z] + 1
+                
+                #다음이 벽이고 부술 기회 있는 경우
+                if board[nx][ny] == 1 and z == 0:
+                    q.append((nx, ny, 1))
+                    visited[nx][ny][1] = visited[x][y][0] + 1
+    return -1
+
+print(dfs(0, 0, 0))
