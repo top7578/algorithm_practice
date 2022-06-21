@@ -1,0 +1,46 @@
+#
+# 백준 
+# DFS / BFS
+# 5214. 환승 (골드5)
+#
+"""
+아이디어 : 방문하는 최소 역의 수 -> 너비 우선 탐색(BFS), 하이퍼튜브도 노드로 간주
+CP : 거리 구할 때 : dis//2 + 1 
+"""
+from collections import deque
+import sys
+input = sys.stdin.readline
+
+n, k, m = map(int, input().split())
+
+graph = [
+    []
+    for _ in range(n+1+m)
+]
+#하이퍼 튜브와 연결된 노드
+for i in range(1, m+1):
+    r =  list(map(int, input().split()))
+    for x in r:
+        graph[n+i].append(x)
+        graph[x].append(n+i)
+
+visited = [False] * (n+1+m)
+
+def bfs(x):
+    q = deque([(x, 0)])
+    visited[x] = True
+    while q:
+        now, dis = q.popleft()
+
+        if now == n:
+            return dis//2 + 1 
+
+        for next in graph[now]:
+            if not visited[next]:
+                q.append((next, dis+1))
+                visited[next] = True
+
+    return -1
+
+print(bfs(1))
+
