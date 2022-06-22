@@ -1,0 +1,59 @@
+#
+# 백준 
+# DFS / BFS
+# 5567. 결혼식 (실버2)
+#
+"""
+아이디어 : 
+1. 최소 작업 수 -> BFS
+2. 공간복잡도 : 100,000 * 100,000 이므로 set으로 해결 
+"""
+
+from collections import deque
+import sys
+
+input = sys.stdin.readline
+
+a, b, c, d = map(int, input().split())
+
+tasks = set()
+
+def bfs():
+    q = deque([(0,0,0)])
+    tasks.add((0,0))
+    
+    cnt = 0
+    while q:
+        x, y, cnt = q.popleft()
+
+        if (x, y) == (c, d):
+            return cnt
+        
+        # F(x), E(x) Case
+        for (next_x, next_y) in [(a, y), (0, y), (x, b), (x, 0)]:
+            if (next_x, next_y) not in tasks:
+                q.append((next_x, next_y, cnt+1))
+                tasks.add((next_x, next_y))
+        
+        # M(x,y) Case
+        if x+y <= b:
+            if (0, x+y) not in tasks:
+                q.append((0, x+y, cnt+1))
+                tasks.add((0, x+y))
+        elif x+y > b:
+            if (x-b+y, b) not in tasks:
+                q.append((x-b+y, b, cnt+1))
+                tasks.add((x-b+y, b))
+
+        if x+y <= a:
+            if (x+y, 0) not in tasks:
+                q.append((x+y, 0, cnt+1))
+                tasks.add((x+y, 0))
+        elif x+y > a:
+            if (a, x-a+y) not in tasks:
+                q.append((a, x-a+y, cnt+1))
+                tasks.add((a, x-a+y))
+
+    return -1
+        
+print(bfs())
