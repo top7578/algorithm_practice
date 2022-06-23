@@ -1,0 +1,61 @@
+#
+# 백준 
+# 구현
+# 18428. 감시 피하기 (실버1)
+#
+"""
+아이디어 :
+1. 백트래킹 : 장애물 설치
+2. 완전 탐색 : 선생님의 상하좌우 일직선으로 학생이 있는지 확인하는 함수
+"""
+
+n = int(input())
+
+teachers = []
+
+board = []
+for i in range(n):
+    row = list(input().split())
+    board.append(row)
+    for j in range(n):
+        if row[j] == 'T':
+            teachers.append((i, j))
+
+dx = [-1, 0, 1, 0]
+dy = [0, 1, 0, -1]
+
+#직선 방향 확인 함수
+def watch(x, y):
+    #4가지 방향에 대해서 진행
+    for i in range(4):
+        nx = x + dx[i] 
+        ny = y + dy[i]
+        # 범위 넘어가거나 장애물 만나면 break
+        while 0 <= nx < n and 0 <= ny < n and board[nx][ny] != 'O':
+            #학생 만나면 true 리턴
+            if board[nx][ny] == 'S':
+                return True
+            nx += dx[i]
+            ny += dy[i]
+    return False
+
+def can_avoid(cnt):
+    global ans
+    # 장애물 3개 설치 했다면
+    if cnt == 3:
+        # 모든 학생들을 감시로부터 피하도록 할 수 있는지
+        for t_x, t_y in teachers:
+            if watch(t_x, t_y):
+                return
+        ans = "YES"
+    else:
+        for i in range(n):
+            for j in range(n):
+                if board[i][j] == 'X':
+                    board[i][j] = 'O'
+                    can_avoid(cnt+1)
+                    board[i][j] = 'X'
+
+ans = "NO"
+can_avoid(0)
+print(ans)
