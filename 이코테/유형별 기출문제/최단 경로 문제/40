@@ -1,0 +1,56 @@
+#
+# 이코테 - 유형별 기출 문제
+# 최단 경로 문제
+# 40.숨바꼭질
+#
+"""
+아이디어 : 
+    1. 최단 거리, 양방향, 거리 1 -> BFS or 다익스트라
+    2. 우선순위 큐 -> (거리, 노드)
+    3. 방문하지 않은 노드 중에서 distance보다 적은 거리(cost) 가지는 노드 큐에 넣고 distance 업데이트
+시간복잡도 :
+    O(ElogV)
+"""
+import heapq
+import sys
+input = sys.stdin.readline
+INF = int(1e9)
+
+n, m = map(int, input().split())
+
+graph = [
+    []
+    for _ in range(n+1)
+]
+for _ in range(m):
+    a, b = map(int, input().split())
+    graph[a].append(b)
+    graph[b].append(a)
+
+distance = [INF] * (n+1)
+
+q = [(0, 1)]
+distance[1] = 0
+
+while q:
+    dist, now = heapq.heappop(q)
+    if dist > distance[now]:
+        continue
+    for next in graph[now]:
+        cost = dist + 1
+        if cost < distance[next]:
+            distance[next] = cost
+            heapq.heappush(q, (cost, next))
+
+max_dist = -1
+max_dist_v = -1
+max_dist_lst = []
+for i in range(2, n+1):
+    if max_dist < distance[i]:
+        max_dist = distance[i]
+        max_dist_v = i
+        max_dist_lst = [i]
+    elif max_dist == distance[i]:
+        max_dist_lst.append(i)
+
+print(max_dist_v, max_dist, len(max_dist_lst))
