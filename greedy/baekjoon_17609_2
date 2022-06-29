@@ -1,0 +1,52 @@
+#
+# 백준 
+# 그리디
+# 17609. 회문 (골드5)
+#
+"""
+아이디어 : 투포인터 
+    1. 앞에서부터 한 문자씩 확인하면서 회문이 성립하는지 확인
+    2. 회문 성립하지 않는 위치 발생 시
+        2-1. 해당 문자를 지웠을 때 유사 회문이 될 수 있는지 확인
+        2-2. 대칭된 위치에 있는 문자를 지웠을 때 유사회문이 될 수 있는지 확인
+
+시간 복잡도 : 
+    1. 테스트 케이스 갯수 : O(T)
+    2. 문자열 길이 만큼 반복 : O(n)
+    => O(T*n) = 30 * 100,000 = 3 * 10^6
+"""
+
+from tabnanny import check
+
+def is_pseudo(l, r):
+    while l < r:
+        if s[l] != s[r]:
+            return False
+        l += 1
+        r -= 1
+    return True
+
+t = int(input())
+
+for _ in range(t):
+    s = input()
+    left = 0
+    right = len(s)-1
+
+    ans = 0
+    while left < right:
+        if s[left] == s[right]:
+            left += 1
+            right -= 1
+        else:
+            check_left = is_pseudo(left+1, right)
+            check_right = is_pseudo(left, right-1)
+
+            if check_left or check_right:
+                ans = 1
+                break
+            else:
+                ans = 2
+                break
+    
+    print(ans)
