@@ -1,0 +1,24 @@
+#
+# 이코테 - 유형별 기출 문제
+# 최단 경로 문제
+# 27. 정렬된 배열에서 특정 수의 개수 구하기
+#
+"""
+아이디어 : 특정한 값을 가지는 원소의 개수 구하기 -> 이진 탐색 라이브러리 bisect
+시간복잡도 : O(logn)
+"""
+from bisect import bisect_left, bisect_right
+
+def count_by_range(target):
+    left = bisect_left(a, target)
+    right = bisect_right(a, target)
+    return (right - left)
+
+n, x = map(int, input().split())
+a = list(map(int, input().split()))
+
+count = count_by_range(x)
+if count == 0:
+    print(-1)
+else:
+    print(count)
