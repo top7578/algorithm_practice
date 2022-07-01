@@ -1,0 +1,50 @@
+#
+# 이코테 - 유형별 기출 문제
+# 최단 경로 문제
+# 27. 정렬된 배열에서 특정 수의 개수 구하기
+#
+"""
+아이디어 : 특정한 값을 가지는 원소의 개수 구하기 -> 이진탐색풀이
+시간복잡도 : O(logn)
+"""
+def find_left(target):
+    start = 0
+    end = len(a) - 1
+    while(start <= end):
+        mid = (start + end) // 2
+        if a[mid] == target and (a[mid-1] != target or mid == 0):
+            return mid
+        elif a[mid] < target:
+            start = mid + 1
+        elif a[mid] >= target:
+            end = mid - 1
+    return None
+
+def find_right(target):
+    start = 0
+    end = len(a) - 1
+    while(start <= end):
+        mid = (start + end) // 2
+        if a[mid] == target and (a[mid+1] != target or mid == n-1):
+            return mid
+        elif a[mid] <= target:
+            start = mid + 1
+        elif a[mid] > target:
+            end = mid - 1
+    return None 
+
+def count_by_range(target):
+    left = find_left(target)
+    right = find_right(target)
+    if left == None or right == None:
+        return -1
+    return right - left + 1
+
+n, x = map(int, input().split())
+a = list(map(int, input().split()))
+
+count = count_by_range(x)
+if count == 0:
+    print(-1)
+else:
+    print(count)
