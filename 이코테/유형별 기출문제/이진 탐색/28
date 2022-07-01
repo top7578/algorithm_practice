@@ -1,0 +1,28 @@
+#
+# 이코테 - 유형별 기출 문제
+# 이진탐색
+# 28. 고정점 찾기
+#
+"""
+아이디어 : 탐색 범위 (-10^9 <= 각 원소의 값 <= 10^9) -> 이진 탐색
+시간복잡도 : O(logn)
+"""
+n = int(input())
+
+a = list(map(int, input().split()))
+
+ans = -1
+
+start = 0
+end = n-1
+while (start <= end):
+    mid = (start + end) // 2
+    if a[mid] == mid:
+        ans = mid
+        break
+    elif a[mid] < mid:
+        start = mid + 1
+    elif a[mid] > mid:
+        end = mid - 1
+
+print(ans)
