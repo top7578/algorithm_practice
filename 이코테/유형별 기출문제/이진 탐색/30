@@ -1,0 +1,54 @@
+#
+# 이코테 - 유형별 기출 문제
+# 이진탐색
+# 30. 가사 검색
+#
+"""
+아이디어 : 
+    모든 단어를 순차 탐색하며 해당 키워드 있나 확인하게 되면 시간초과가 발생하므로
+    순차 탐색으로 해결한다
+시간복잡도 : 
+    1. queries 안의 각 키워드 : O(m) 
+    2. words안에 해당 키워드 몇개 있는지 bisect으로 확인 : O(logn)
+CP : 
+    1. 이진 탐색은 정렬되어 있는 상태에서 해야 한다.
+    2. bisect은 들어갈 위치 결과값을 return하므로 길이별로 따로 배열을 만들어 비교해야 한다.
+    3. '?'가 접두사에 들어갈 경우 reverse 해줘야 한다. 그렇지 않으면 모두 포함된다.
+
+"""
+
+from bisect import bisect_left, bisect_right
+import sys
+
+input = sys.stdin.readline
+def count_by_range(lst, start, end):
+    return bisect_left(lst, end) - bisect_right(lst, start)
+
+array = [
+    []
+    for _ in range(10001)
+]
+reversed = [
+    []
+    for _ in range(10001)
+]
+
+def solution(words, queries):
+    answer = []
+
+    for word in words:
+        array[len(word)].append(word)
+        reversed[len(word)].append(word[::-1])
+
+    for i in range(10001):
+        array[i].sort()
+        reversed[i].sort()
+
+    for q in queries:
+        if q[0] != '?':
+            cnt = count_by_range(array[len(q)], q.replace('?', 'a'), q.replace('?', 'z'))
+        else:
+            cnt = count_by_range(reversed[len(q)], q[::-1].replace('?', 'a'), q[::-1].replace('?', 'z'))
+        answer.append(cnt)
+
+    return answer
