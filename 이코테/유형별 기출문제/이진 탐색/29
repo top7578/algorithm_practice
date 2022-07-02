@@ -1,0 +1,44 @@
+#
+# 이코테 - 유형별 기출 문제
+# 이진탐색
+# 29. 공유기 설치
+#
+"""
+아이디어 : 
+    1. 가장 인접한 두 공유기 사이의 거리를 최대로
+    2. 파라메트릭 서치
+
+시간복잡도 : 
+    1. 정렬 : O(nlogn)
+    2. 탐색 : O(nlogx)
+    => O(nlogx)
+"""
+import sys
+input = sys.stdin.readline
+
+n, c = map(int, input().split())
+
+array = []
+for _ in range(n):
+    array.append(int(input()))
+array.sort()
+
+start = 1
+end = array[-1] - array[0]
+ans = 0
+
+while(start <= end):
+    mid = (start+end) // 2
+    now = array[0]
+    cnt = 1
+    for i in range(1, n):
+        if array[i] >= now + mid:
+            now = array[i]
+            cnt += 1
+    if cnt >= c:
+        start = mid + 1
+        ans = mid   # 최적의 결과를 저장
+    else:
+        end = mid - 1
+
+print(ans)
