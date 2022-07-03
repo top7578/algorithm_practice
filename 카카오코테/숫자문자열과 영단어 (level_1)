@@ -1,0 +1,57 @@
+#
+# 2021_카카오인턴십
+# 문자열
+# 1. 숫자 문자열과 영단어 (level_1)
+#
+"""
+아이디어 : 
+    replace를 활용한 문자열 치환
+시간복잡도 : 
+    1. 10개의 영단어 -> O(1)
+    2. replace -> O(n)
+    => O(n)
+CP : 
+    1. str.replace()의 시간복잡도는 의견이 분분하다. O(n)으로 고려
+    2. 풀이2)의 딕셔너리 활용
+"""
+def word_to_digit(s):
+    new_s = s.replace("zero", "0").replace("one", "1").replace("two", "2").replace("three", "3").replace("four", "4").replace("five", "5").replace("six", "6").replace("seven", "7").replace("eight", "8").replace("nine", "9")
+    new_s = int(new_s)
+    return new_s
+
+def solution(s):
+    ans = word_to_digit(s)
+    return ans
+
+""" 
+풀이 1) 깔끔한 풀이
+def solution(s):
+    words = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine']
+
+    for i in range(len(words)):
+        s = s.replace(words[i], str(i))
+
+    return int(s)
+
+풀이 2) 딕셔너리 활용
+word_to_num = {
+    "zero": "0",
+    "one": "1",
+    "two": "2",
+    "three": "3",
+    "four": "4",
+    "five": "5",
+    "six": "6",
+    "seven": "7",
+    "eight": "8",
+    "nine": "9"
+}
+
+def solution(s):
+    
+    for key, value in word_to_num.items():
+        if key in s:
+            s = s.replace(key, value)
+            
+    return int(s)
+"""
