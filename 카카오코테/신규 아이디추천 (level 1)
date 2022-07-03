@@ -1,0 +1,60 @@
+#
+# 2021_카카오블라인드
+# 문자열
+# 1. 신규 아이디추천 (level 1)
+#
+"""
+CP: 
+2단계 ->
+    answer = ''
+    for word in new_id:
+        if word.isalnum() or word in '-_.':
+            answer += word
+3단계 ->
+    while '..' in answer:
+        answer = answer.replace('..', '.')
+7단계 ->
+    if len(answer) <= 3:
+        answer += answer[-1] * (3-len(answer))
+"""
+def solution(new_id):
+    # 1단계
+    new_id = new_id.lower() 
+
+    # 2단계
+    tmp = ""
+    for c in new_id:
+        if c.isalpha() or c.isdigit() or c in ["-", "_", "."]:
+            tmp += c
+    new_id = tmp
+
+    tmp = new_id[0]
+    ex = new_id[0]
+    for i in range(1, len(new_id)):
+        if ex == '.' and new_id[i] == '.':
+            ex = new_id[i]
+            continue
+        tmp += new_id[i]
+        ex = new_id[i]
+    new_id = tmp
+
+    # 4단계
+    if (len(new_id) >= 1 and new_id[0] == '.'):
+        new_id = new_id[1:]
+    if (len(new_id) >= 1 and new_id[-1] == '.'):
+        new_id = new_id[:-1]
+
+    # 5단계
+    if len(new_id) == 0:
+        new_id = "a"
+
+    # 6단계
+    new_id = new_id[:15]
+    if (len(new_id) >= 1 and new_id[-1] == '.'):
+        new_id = new_id[:-1]
+
+    # 7단계
+    if len(new_id) <= 2:
+        while (len(new_id) < 3):
+            new_id += new_id[-1]
+    return new_id
