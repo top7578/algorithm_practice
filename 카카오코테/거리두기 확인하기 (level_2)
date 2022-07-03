@@ -1,0 +1,64 @@
+#
+# 2021_카카오인턴십
+# BFS
+# 2.  거리두기 확인하기 (level_2)
+#
+"""
+아이디어 : bfs
+"""
+from collections import deque
+
+dx = [-1, 0, 1, 0]
+dy = [0, 1, 0, -1]
+
+def is_possible(place, x, y):
+    visited = [
+        [-1] * 5
+        for _ in range(5)
+    ]
+
+    q = deque([(0, x, y)])
+    visited[x][y] = 1
+    while q:
+        cnt, x, y = q.pop()
+        # 거리 3이상이면 pass
+        if cnt == 2:
+            continue
+        for i in range(4):
+            nx = x + dx[i]
+            ny = y + dy[i]
+            if 0 <= nx < 5 and 0 <= ny < 5 and visited[nx][ny] == -1:
+                if place[nx][ny] == 'P':
+                    return False
+                elif place[nx][ny] == 'X':
+                    continue
+                q.append((cnt+1, nx, ny))
+                visited[nx][ny] = 1
+    return True            
+
+def solution(places):
+    answer = []
+    
+    # 5개의 대기장 확인
+    for i in range(5):
+        # 사람 위치 저장
+        people_pos = []    
+        for r in range(5):
+            for c in range(5):
+                if places[i][r][c] == 'P':
+                    people_pos.append((r, c))
+        
+        check = True
+        for p_x, p_y in people_pos:
+            # 거리두기 지키고 있으면    
+            if not is_possible(places[i], p_x, p_y):
+                check = False
+
+        if check:
+            answer.append(1)
+        elif not check:
+            answer.append(0)
+
+    return answer
+
+#print(solution([["POOOP", "OXXOX", "OPXPX", "OOXOX", "POXXP"], ["POOPX", "OXPXP", "PXXXO", "OXXXO", "OOOPP"], ["PXOPX", "OXOXP", "OXPOX", "OXXOP", "PXPOX"], ["OOOXX", "XOOOX", "OOOXX", "OXOOX", "OOOOO"], ["PXPXP", "XPXPX", "PXPXP", "XPXPX", "PXPXP"]]))
