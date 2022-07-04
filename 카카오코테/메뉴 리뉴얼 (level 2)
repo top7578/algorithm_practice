@@ -1,0 +1,65 @@
+#
+# 2021_카카오블라인드
+# 조합/정렬
+# 2. 메뉴 리뉴얼 (level 2)
+#
+"""
+CP: 
+1. 문자열 정렬하고 싶을 때 sort한 다음에 join으로 묶어줘야 한다. 
+orders[i] = "".join(sorted(orders[i]))
+2. Counter 클래스 : 요소가 딕셔너리 키로 저장되고 개수가 딕셔너리 값으로 저장되는 컬렉션
+3. Counter([리스트] or [문자열]).most_common(1) : 데이터 개수가 많은 순으로 정렬된 배열을 리턴
+"""
+from collections import defaultdict, Counter
+from itertools import combinations
+
+def solution(orders, course):
+    answer = []
+    for i in range(len(orders)):
+        orders[i] = "".join(sorted(orders[i]))
+        
+    for c in course:
+        course_dict = defaultdict(int)
+
+        # 주문(order) 돌면서 단품메뉴 수(c)에 해당하는 key를 dict에 저장
+        for order in orders:
+            candidates = list(combinations(order, c))
+            for candidate in candidates:
+                candidate = "".join(candidate)
+                course_dict[candidate] += 1
+        
+        tmp = []
+        max_ = 0
+        #print(course_dict)
+        for key, value in course_dict.items():
+            value = int(value)
+            if max_ == value:
+                tmp.append(key)
+            elif max_ < value:
+                max_ = value
+                tmp = [key]
+        if max_ != 1:
+            answer += tmp
+    
+    answer.sort()
+
+    return answer
+
+#print(solution(["XYZ", "XWY", "WXA"], [2,3,4]))
+
+
+# def solution(orders, course):
+#     answer = []
+#     for c in course:
+#         course_lst = []
+#         for order in orders:
+#             for candidate in combinations(order, c):
+#                 course_lst.append(''.join(sorted(candidate)))
+#         sorted_course_lst = Counter(course_lst).most_common()
+#         answer += [ menu 
+#             for menu, cnt in sorted_course_lst 
+#             if cnt > 1 and cnt == sorted_course_lst[0][1]
+#         ]
+#     return sorted(answer)
+
+# print(solution(["XYZ", "XWY", "WXA"], [2,3,4]))
