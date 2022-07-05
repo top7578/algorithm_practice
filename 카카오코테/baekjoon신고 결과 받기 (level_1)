@@ -1,0 +1,29 @@
+#
+# 2022_카카오블라인드
+# 구현
+# 신고 결과 받기 (level_1)
+#
+"""
+아이디어 :
+신고한 dict와 신고당한 dict를 가지고 있으면 서로 참조할 수 있다.
+"""
+from collections import defaultdict
+def solution(id_list, report, k):
+    answer = []
+    
+    report_to_from = defaultdict(set) # key(id)를 신고한 목록
+    report_from_to = defaultdict(set) # key(id)가 신고한 목록
+    for r in report:
+        report_from, report_to = r.split()
+        report_to_from[report_to].add(report_from)
+        report_from_to[report_from].add(report_to)
+    
+    for id in id_list:
+        cnt = 0
+        for r_to in report_from_to[id]:
+            if len(report_to_from[r_to]) >= k:
+                cnt += 1
+        answer.append(cnt)
+    return answer
+
+#print(solution(["muzi", "frodo", "apeach", "neo"], ["muzi frodo","apeach frodo","frodo neo","muzi neo","apeach muzi"], 2))
