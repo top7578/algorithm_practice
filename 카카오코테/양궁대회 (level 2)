@@ -1,0 +1,42 @@
+#
+# 2022_카카오블라인드
+# 중복 조합
+# 양궁대회
+#
+"""
+아이디어 :
+중복 조합 
+cf) 중복 순열
+"""
+from itertools import combinations_with_replacement
+
+def compare_score(info, lion):
+    apache_score = 0
+    lion_score = 0
+    for i in range(10+1):
+        if info[i] == lion[i] and info[i] != 0:
+            apache_score += (10-i)
+        elif info[i] > lion[i]:
+            apache_score += (10-i)
+        elif info[i] < lion[i]:
+            lion_score += (10-i)
+    return lion_score - apache_score
+
+
+def solution(n, info):
+    max_ = -1e9
+    answer = [-1]
+    for candidate in list(combinations_with_replacement(range(0, 11), n)):
+        lion = [0] * 11
+
+        for score in candidate:
+            lion[10 - score] += 1
+
+        diff = compare_score(info, lion)
+        if diff > 0 and max_ < diff:
+            max_ = diff
+            answer = lion
+
+    return answer
+
+#print(solution(10, [0,0,0,0,0,0,0,0,3,4,3]))
