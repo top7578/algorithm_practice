@@ -1,0 +1,66 @@
+#
+# 2020_카카오인턴십
+# 구현
+# 키패드 누르기
+#
+"""
+
+"""
+from collections import deque
+
+left_pos = {
+    1: (0, 0),
+    4: (1, 0),
+    7: (2, 0)
+}
+
+right_pos = {
+    3: (0, 2),
+    6: (1, 2),
+    9: (2, 2)
+}
+
+mid_pos = {
+    2: (0, 1),
+    5: (1, 1), 
+    8: (2, 1), 
+    0: (3, 1)
+}
+
+def find_hand(n, l, r, h):
+    global left, right
+    l_diff = abs(l[0] - mid_pos[n][0]) + abs(l[1] - mid_pos[n][1])
+    r_diff = abs(r[0] - mid_pos[n][0]) + abs(r[1] - mid_pos[n][1])
+    if l_diff == r_diff:
+        if h == 'left':
+            left = mid_pos[n]
+            return 'L'
+        elif h == 'right':
+            right = mid_pos[n]
+            return 'R'
+    
+    if l_diff < r_diff:
+        left = mid_pos[n]
+        return 'L'
+    else:
+        right = mid_pos[n]
+        return 'R'
+
+left = (3, 0)
+right = (3, 2)
+
+def solution(numbers, hand):
+    global left, right
+    answer = ''
+    for num in numbers:
+        if num in [1, 4, 7]:
+            left = left_pos[num]
+            answer += 'L'
+        elif num in [3, 6, 9]:
+            right = right_pos[num]
+            answer += 'R'
+        elif num in [2, 5, 8, 0]:
+            answer += find_hand(num, left, right, hand)
+    return answer
+
+#print(solution([1, 3, 4, 5, 8, 2, 1, 4, 5, 9, 5], "right"))
