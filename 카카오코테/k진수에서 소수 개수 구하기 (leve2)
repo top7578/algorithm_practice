@@ -1,0 +1,37 @@
+#
+# 2022_카카오블라인드
+# 구현, 진수 변환
+# k진수에서 소수 개수 구하기
+#
+"""
+아이디어 :
+10진수 -> k진수(num_to_k())
+"""
+
+def num_to_k(n, k):
+    ret = ""
+    while n>0:
+        ret += str(n % k)
+        n //= k
+    return ''.join(reversed(ret))
+
+def is_prime(x):
+    x = int(x)
+    if x == 1:
+        return False
+    for i in range(2, int(x**0.5)+1):
+        if x % i == 0:
+            return False
+    return True
+
+def solution(n, k):
+    ans = 0
+    new_n = num_to_k(n, k)
+    lst = new_n.split('0')
+    for x in lst:
+        if x == "":
+            continue
+        ans += 1 if is_prime(int(x)) else 0
+    return ans
+
+#print(solution(110011, 10))
