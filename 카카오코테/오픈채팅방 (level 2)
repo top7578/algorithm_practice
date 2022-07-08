@@ -1,0 +1,26 @@
+#
+# 2020_카카오인턴십
+# 구현
+# 오픈채팅방 (level 2)
+#
+
+def solution(records):
+    dict = {}
+    for record in records:
+        re = record.split()
+        if re[0] == 'Enter':
+            dict[re[1]] = re[2]
+        elif re[0] == 'Change':
+            dict[re[1]] = re[2]
+    
+    answer = []
+    for record in records:
+        re = record.split()
+        if re[0] == 'Enter':
+            message = f"{dict[re[1]]}님이 들어왔습니다."
+        elif re[0] == 'Leave':
+            message = f"{dict[re[1]]}님이 나갔습니다."
+        elif re[0] == "Change":
+            continue
+        answer.append(message)
+    return answer
