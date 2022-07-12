@@ -1,0 +1,33 @@
+# hour = '0' * (2-len(hour)) + hour
+
+def get_time(str):
+    hour, min, sec = map(int, str.split(":"))
+    
+    time = 0
+    time += sec
+    time += min * 60
+    time += hour * 60 * 60
+    return time
+
+def plus_zero(t):
+    t_str = str(t)
+    if len(t_str) == 1:
+        return "0" + t_str 
+    return t_str
+
+now_str = input()
+target_str = input()
+
+now_sec = get_time(now_str)
+target_sec = get_time(target_str)
+total_sec = target_sec - now_sec if target_sec > now_sec else target_sec + 24*60*60 - now_sec
+
+h = total_sec // (60*60)
+total_sec %= 60*60 
+m = total_sec // 60
+total_sec %= 60
+s = total_sec
+
+ans = plus_zero(h) + ":" + plus_zero(m) + ":" + plus_zero(s) 
+
+print(ans)
