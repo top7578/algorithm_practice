@@ -1,0 +1,55 @@
+dx = [-1, 0, 1, 0]
+dy = [0, -1, 0, 1]
+
+n = int(input())
+
+arr = [
+    [0] * n 
+    for _ in range(n)
+]
+stu = []
+for i in range(n**2):
+    stu.append(list(map(int, input().split())))
+
+for i in range(n ** 2):
+    tmp = []
+    for x in range(n):
+        for y in range(n):
+            if arr[x][y] != 0:
+                continue
+            like = 0
+            empty = 0
+            for d in range(4):
+                nx = x + dx[d]
+                ny = y + dy[d]
+                if nx < 0 or nx >= n or ny < 0 or ny >= n:
+                    continue
+                if arr[nx][ny] in stu[i][1:]:
+                    like += 1
+                if arr[nx][ny] == 0:
+                    empty += 1
+            tmp.append((like, empty, (x, y)))
+    tmp.sort(key = lambda x: (-x[0], -x[1], x[2]))
+    arr[tmp[0][2][0]][tmp[0][2][1]] = stu[i][0]
+
+ans = 0
+stu.sort()
+for x in range(n):
+    for y in range(n):
+        near = 0 
+        for d in range(4):
+            nx = x + dx[d]
+            ny = y + dy[d]
+            if nx < 0 or nx >= n or ny < 0 or ny >= n:
+                continue
+            if arr[nx][ny] in stu[arr[x][y]-1][1:]:
+                near += 1
+        if near == 1:
+            ans += 1
+        elif near == 2:
+            ans += 10
+        elif near == 3:
+            ans += 100
+        elif near == 4:
+            ans += 1000
+print(ans)
