@@ -1,0 +1,31 @@
+# from itertools import permutations
+
+# n, m = map(int, input().split())
+
+# lst = list(range(1, n+1))
+# candidates = list(permutations(lst, m))
+
+# for c in candidates:
+#     print(*c)
+
+# 백트래킹 : 모든 경우의 수를 탐색하는 대신 조건을 걸어서 
+# 유망(promising)하지 않은 경우에는 탐색을 중지하고 이전 노드로 돌아가서 다른 경우를 탐색한다.
+
+def dfs(cnt):
+    if cnt == m:
+        print(' '.join(map(str, s)))
+        return
+
+    for i in range(1, n+1):
+        if visited[i] == True:
+            continue
+        s.append(i)
+        visited[i] = True
+        dfs(cnt+1)
+        s.pop()
+        visited[i] = False
+
+n, m = map(int, input().split())
+s = []
+visited = [False] * (n+1)
+dfs(0)
