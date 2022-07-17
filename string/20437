@@ -1,0 +1,29 @@
+from collections import defaultdict
+    
+t = int(input())
+for _ in range(t):
+    w = input()
+    k = int(input())
+
+    dict = defaultdict(list)
+
+    for i in range(len(w)):
+        dict[w[i]].append(i)
+    
+    min_ = 987654321
+    max_ = 0
+    for key, value in dict.items():
+        # k개 가지고 있지 않으면 continue
+        if len(value) < k:
+            continue
+
+        step = k - 1
+        for i in range(len(value)-step):
+            next = value[i+step] - value[i] + 1
+            min_ = min(min_, next)
+            max_ = max(max_, next)
+    #k를 만족하는 연속 문자열이 없는 경우
+    if max_ == 0:
+        print(-1)
+    else:
+        print(min_, max_)
