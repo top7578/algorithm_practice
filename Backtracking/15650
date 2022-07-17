@@ -1,0 +1,22 @@
+# 백트래킹 : 모든 경우의 수를 탐색하는 대신 조건을 걸어서 
+# 유망(promising)하지 않은 경우에는 탐색을 중지하고 이전 노드로 돌아가서 다른 경우를 탐색한다.
+
+def bfs(cnt):
+    if m == cnt:
+        print(' '.join(map(str, result)))
+        return
+    for i in range(1, n+1):
+        if visited[i]:
+            continue
+        if len(result) >= 1 and result[-1] >= i:
+            continue
+        result.append(i)
+        visited[i] = True
+        bfs(cnt+1)
+        result.pop()
+        visited[i] = False
+
+n, m = map(int, input().split())
+result = []
+visited = [False] * (n+1)
+bfs(0)
