@@ -1,0 +1,53 @@
+# 'X' 없는 위치 삭제 시키기
+
+import copy
+
+r, c = map(int, input().split())
+
+board = []
+islands = []
+for i in range(r):
+    row = input()
+    board.append(list(row))
+    for j in range(c):
+        if row[j] == 'X':
+            islands.append((i, j))
+
+dx = [-1, 0, 1, 0]
+dy = [0, 1, 0, -1]
+
+tmp = copy.deepcopy(board)
+
+# 50년 후 지도
+for (x, y) in islands:
+    cnt_oceans = 0
+    for i in range(4):
+        nx = x + dx[i]
+        ny = y + dy[i]
+        if 0 > nx or r <= nx or 0 > ny or c <= ny:
+            cnt_oceans += 1
+            continue
+        if board[nx][ny] == '.':
+            cnt_oceans += 1
+    if cnt_oceans >= 3:
+        tmp[x][y] = '.'
+
+start_x = r
+start_y = c
+end_x = 0
+end_y = 0
+# 지도 크기 줄이기
+for i in range(r):
+    for j in range(c):
+        if tmp[i][j] == 'X':
+            start_x = min(start_x, i)
+            start_y = min(start_y, j)
+            end_x = max(end_x, i)
+            end_y = max(end_y, j)
+
+for i in range(start_x, end_x+1):
+    for j in range(start_y, end_y+1):
+        print(tmp[i][j], end='')
+    print()
+
+
