@@ -1,0 +1,27 @@
+n = int(input())
+
+data = []
+for _ in range(n):
+    s, e = map(int, input().split())
+    data.append((s, e))
+data.sort(key=lambda x: (x[0], -x[1]))
+
+days = [
+    0
+    for _ in range(365+1)
+]
+for (s, e) in data:
+    for i in range(s, e+1):
+        days[i] += 1
+
+ans = 0
+w, h = 0, 0
+for i in range(1, 365+1):
+    if days[i] == 0:
+        ans += (w * h)
+        w, h = 0, 0
+    elif days[i] != 0:
+        w += 1
+        h = max(h, days[i])
+ans += (w * h)
+print(ans)
