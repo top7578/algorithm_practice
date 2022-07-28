@@ -1,0 +1,52 @@
+import copy
+
+def rotate_key(k):
+    m = len(k)
+    new_key = [
+        [0 for _ in range(m)]
+        for _ in range(m)
+    ]
+    for i in range(m):
+        for j in range(m):
+            new_key[j][m-1-i] = k[i][j]
+    return new_key
+    
+def solution(key, lock):
+    m = len(key)
+    n = len(lock)
+    #lock을 넓힌다
+    new_lock = [
+        [0 for _ in range(2*m+n)]
+        for _ in range(2*m+n)
+    ]
+    for i in range(n):
+        for j in range(n):
+            new_lock[m+i][m+j] = lock[i][j] 
+
+    #키를 90도 돌린다
+    for d in range(4):
+        key = rotate_key(key)
+        
+        #key 완전 탐색
+        for i in range(m+n):
+            for j in range(m+n):
+                tmp_lock = copy.deepcopy(new_lock)
+                    
+                for k in range(m):
+                    for l in range(m): 
+                        tmp_lock[i+k][j+l] += key[k][l] 
+
+                #key가 lock을 모두 포함하는지 확인
+                is_possible = True
+                for k in range(n):
+                    for l in range(n):
+                        #모든 홈을 채우지 못하거나 돌기가 만나는 경우
+                        if tmp_lock[m+k][m+l] == 0 or tmp_lock[m+k][m+l] == 2:
+                            is_possible = False
+                            break
+                    if not is_possible:
+                        break
+
+                if is_possible:
+                    return True
+    return False
