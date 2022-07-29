@@ -1,0 +1,45 @@
+from collections import deque
+
+m, n, h = map(int, input().split())
+
+q = deque([])
+
+boxs = []
+for k in range(h):
+    box = []
+    for i in range(n):
+        lst = list(map(int, input().split()))
+        box.append(lst)
+        for j in range(len(lst)):
+            if lst[j] == 1:
+                q.append((i, j, k))
+    boxs.append(box)
+
+dx = [-1, 0, 1, 0, 0, 0]
+dy = [0, 1, 0, -1, 0 , 0]
+dz = [0, 0, 0, 0, -1, 1]
+
+while q:
+    x, y, z = q.popleft()
+
+    for d in range(6):
+        nx = x + dx[d]
+        ny = y + dy[d]
+        nz = z + dz[d]
+        if 0 <= nx < n and 0 <= ny < m and 0 <= nz < h:
+            if boxs[nz][nx][ny] == 0:
+                q.append((nx, ny, nz))
+                boxs[nz][nx][ny] = boxs[z][x][y] + 1
+
+day = 0
+check = False
+for z in range(h):
+    for x in range(n):
+        for y in range(m):
+            if boxs[z][x][y] == 0:
+                check = True
+            day = max(day, boxs[z][x][y])
+if check:
+    print(-1)
+else:
+    print(day-1)
