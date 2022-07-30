@@ -1,0 +1,11 @@
+def solution(n):
+    answer = ''
+    while n > 0:
+        tmp = n%3
+        answer += '412'[tmp]
+        n //= 3
+        
+        if tmp == 0:
+            n -= 1
+            
+    return answer[::-1]
