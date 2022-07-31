@@ -1,0 +1,23 @@
+import heapq
+
+def solution(scoville, K):
+    
+    heap = []
+    for s in scoville:
+        heapq.heappush(heap, s)
+    
+    answer = 0
+    while heap[0] < K:
+        #모든 음식의 스코빌 지수를 K 이상으로 만들 수 없는 경우
+        if len(heap) <= 1:
+            answer = -1
+            break
+        
+        min1 = heapq.heappop(heap)
+        min2 = heapq.heappop(heap)
+        
+        new = min1 + min2*2
+        heapq.heappush(heap, new)
+        answer += 1
+        
+    return answer
