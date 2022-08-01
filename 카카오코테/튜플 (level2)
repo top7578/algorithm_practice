@@ -1,0 +1,18 @@
+def solution(S):
+    S = S[2:-2].split('},{')
+    
+    num_arr = []
+    for i in range(len(S)):
+        s = S[i].split(",")
+        num_arr.append(s)
+    
+    num_arr.sort(key = lambda x:len(x))
+
+    ans = []
+    for i in range(len(num_arr)):
+        for num in num_arr[i]:
+            if num not in ans:
+                ans.append(num)
+                
+    ans = list(map(int, ans))
+    return ans
