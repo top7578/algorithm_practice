@@ -1,0 +1,22 @@
+from itertools import permutations
+
+def solution(k, dungeons):
+    ans = 0
+    
+    length = len(dungeons)
+    
+    combinations = list(permutations(range(length), length))
+    for candidate in combinations:
+        
+        now = k #현재 피로도
+        tmp = 0 #해당 순서 가능한 던전 수
+        for i in candidate:
+            dungeon = dungeons[i]
+            #최소 필요도 만족X
+            if now < dungeon[0]:
+                break       
+            now -= dungeon[1]
+            tmp += 1  
+        ans = max(ans, tmp)
+           
+    return ans
