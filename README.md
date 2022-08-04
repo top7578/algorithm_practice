@@ -18,7 +18,6 @@ list(itertools.product('ABC', 2)) #결과 : 'AA' 'AB' 'AC' 'BA' 'BB' 'BC' 'CA' '
 ```
 
 
-
 # heap
 > import heapq
 
@@ -55,4 +54,33 @@ Counter( [리스트] or [문자열] ).most_common( 출력갯수 )
 문자열을 정렬하고 싶을 땐 sort한 다음에 join으로 묶어줘야 한다. (sort하면 리스트를 반환한다)
 ```python
 orders[i] = "".join(sorted(orders[i]))
+```
+
+## 문자열 수정
+문자열 값을 변경하고 싶을땐 list로 변환 후 idx에 해당하는 값을 수정하고 join으로 묶어준다.
+
+## 찾기
+find() 함수는 왼쪽부터 찾고, rfind() 함수는 오른쪽부터 찾는다.
+```python
+"별똥별".find("별") #결과: 0
+"별똥별".rfind("별") #결과: 2
+```
+
+# 진수 변환
+## 10진수 -> n진수
+```python
+#1. bin(x)[2:]): 내장함수 bin 사용
+#2. 
+def change_10to2(n):
+    tmp = []
+    while n > 0:
+        tmp.append(str(n%2))
+        n //= 2
+    tmp = tmp[::-1]
+    return tmp
+```
+
+## n진수 -> 10진수
+```python
+int(문자열 값, n)
 ```
