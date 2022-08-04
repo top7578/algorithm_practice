@@ -1,0 +1,55 @@
+dx = [0, 0, 1, 1]
+dy = [0, 1, 0, 1]
+
+def simulations(board, m, n):
+    satisfied_pos = []
+    num_changed_block = 0
+    for i in range(m-1):
+        for j in range(n-1):
+            block = board[i][j]
+            #빈칸이면 pass
+            if block == '0':
+                continue
+            is_satisfy = True
+            for d in range(4):
+                nx = i + dx[d]
+                ny = j + dy[d]
+                if block != board[nx][ny]:
+                    is_satisfy = False
+                    break
+            #2*2 모두 같은 블록
+            if is_satisfy:
+                satisfied_pos.append((i, j))
+    #만족하는 pos '0'으로 모두 변환하면서 갯수 cnt
+    for i, j in satisfied_pos:
+        for d in range(4):
+            nx = i + dx[d]
+            ny = j + dy[d]
+            if board[nx][ny] != '0':
+                board[nx][ny] = '0'
+                num_changed_block += 1
+    #내리기
+    for j in range(n):
+        for i in range(m-1, 0, -1):
+            if board[i][j] == '0':
+                x = i-1
+                while x>0 and board[x][j] == '0':
+                    x -= 1
+                board[i][j] = board[x][j]
+                board[x][j] = '0'
+    
+    return num_changed_block
+                
+def solution(m, n, board):
+    board = [
+        list(board[i])
+        for i in range(m)
+    ]
+    answer = 0
+    while True:
+        num_changed_block = simulations(board, m, n)
+        if num_changed_block == 0:
+            break
+        answer += num_changed_block    
+    
+    return answer
