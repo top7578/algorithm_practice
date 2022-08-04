@@ -1,0 +1,49 @@
+def change_10to2(n):
+    tmp = []
+    while n > 0:
+        tmp.append(str(n%2))
+        n //= 2
+    tmp = tmp[::-1]
+    return tmp
+    
+def solution(numbers):
+    
+    answer = []
+    for n in numbers:
+        if n == 0:
+            answer.append(1)
+            continue
+            
+        n_2 = change_10to2(n)   #리스트
+        
+        changed = False
+        last = -1
+        for i in range(len(n_2)-1, -1, -1):
+            if n_2[i] == '0':
+                n_2[i] = '1'
+                if last != -1:
+                    n_2[last] = '0'
+                changed = True
+                answer.append(int(''.join(n_2), 2))
+                break
+            last = i   
+        if not changed:
+            n_2 = '10'+''.join(n_2[1:])
+            answer.append(int(n_2, 2))
+            
+    return answer
+
+# def solution(numbers):
+#     answer = []
+
+#     for number in numbers:
+#         bin_number = list('0' + bin(number)[2:])
+#         idx = ''.join(bin_number).rfind('0')
+#         bin_number[idx] = '1'
+        
+#         if number % 2 == 1:
+#             bin_number[idx+1] = '0'
+        
+#         answer.append(int(''.join(bin_number), 2))
+
+#     return answer
