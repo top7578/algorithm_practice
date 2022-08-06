@@ -1,0 +1,13 @@
+from itertools import product
+
+def solution(word):
+    alps = ['A', 'E', 'I', 'O', 'U']
+    
+    words = []
+    for i in range(1, 6):
+        for c in list(product(alps, repeat=i)):
+            words.append("".join(c))
+    
+    words.sort()
+
+    return words.index(word) + 1
