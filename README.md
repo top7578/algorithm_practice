@@ -6,7 +6,7 @@ combinations_with_replacement(iter, r) : A~E 5명의 후보가 있다. 중복을
 ```python
 from itertools import combinations_with_replacement
 
-list(itertools.combinations_with_replacement('ABC', 2)) #결과 : 'AA' 'AB' 'AC' 'BB' 'BC' 'CC' 
+list(combinations_with_replacement('ABC', 2)) #결과 : 'AA' 'AB' 'AC' 'BB' 'BC' 'CC' 
 ```
 
 ## 중복순열
@@ -14,7 +14,7 @@ product(iter, r) : 1~5 숫자카드가 있다. 중복을 허용해 2자리수를
 ```python
 from itertools import product
 
-list(itertools.product('ABC', 2)) #결과 : 'AA' 'AB' 'AC' 'BA' 'BB' 'BC' 'CA' 'CB' 'CC'
+list(product('ABC', repeat=2)) #결과 : 'AA' 'AB' 'AC' 'BA' 'BB' 'BC' 'CA' 'CB' 'CC'
 ```
 
 
