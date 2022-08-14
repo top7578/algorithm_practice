@@ -1,0 +1,26 @@
+from collections import deque
+
+dx = [-1, 0, 1, 0]
+dy = [0, 1, 0, -1]
+
+def bfs(board, n, m):
+    q = deque([(0, 0)])
+    
+    while q:
+        x, y = q.popleft()
+        if (x, y) == (n-1, m-1):
+            return board[x][y]
+        for i in range(4):   
+            nx = x + dx[i]
+            ny = y + dy[i]
+            if 0 <= nx < n and 0 <= ny < m:
+                if board[nx][ny] == 1:
+                    board[nx][ny] = board[x][y] + 1
+                    q.append((nx, ny))
+    return -1
+
+def solution(maps):
+    n = len(maps)
+    m = len(maps[0])
+
+    return bfs(maps, n, m)
