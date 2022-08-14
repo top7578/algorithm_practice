@@ -1,0 +1,19 @@
+from collections import deque
+
+def bfs(computers, visited, n, x):
+    q = deque([x])
+    while q:
+        now = q.popleft()
+        visited[now] = True
+        for next in range(n):
+            if not visited[next] and next != now and computers[now][next] == 1:
+                q.append(next)
+                    
+def solution(n, computers):
+    visited = [False for _ in range(n)]
+    answer = 0
+    for i in range(n):
+        if visited[i] == False:
+            bfs(computers, visited, n, i)
+            answer += 1
+    return answer
