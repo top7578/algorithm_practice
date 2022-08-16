@@ -32,6 +32,19 @@ heapq.heapify(a)  //결과: a는 [1, 4, 3, 10]
 두 번째로 작은 원소를 얻으려면 heappop()을 통해 최솟값을 삭제한 후 heap[0]로 접근하는 방법을 사용하거나, 인덱스 1을 인덱스 2와 비교하는 방법을 사용해야 한다. (최소값만 보장)
 
 
+# hash
+> from collections import defaultdict
+딕셔너리에 items() 메서드를 사용해주면 {"key" : value}의 형태를 [(key, value)]의 형태로 만들어 준다.
+## key를 기준으로 딕셔너리 정렬
+```python
+sorted(d.items(), key=lambda x : x[1])
+```
+
+## value를 기준으로 딕셔너리 정렬
+```python
+sorted(d.items(), key=lambda x : x[1])
+```
+
 # Math
 > import math
 
