@@ -1,0 +1,27 @@
+from collections import deque
+
+def solution(queue1, queue2):
+    left_sum = sum(queue1)
+    right_sum = sum(queue2)
+    queue1 = deque(queue1)
+    queue2 = deque(queue2)
+
+    answer = 0
+    while answer <= 600000:
+        if left_sum < right_sum:
+            tmp = queue2.popleft()
+            right_sum -= tmp
+            queue1.append(tmp)
+            left_sum += tmp
+        elif left_sum > right_sum:
+            tmp = queue1.popleft()
+            left_sum -= tmp
+            queue2.append(tmp)
+            right_sum += tmp
+        else:
+            return answer
+        
+        answer += 1
+
+    else:
+        return -1
