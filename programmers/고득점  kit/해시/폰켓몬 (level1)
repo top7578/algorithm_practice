@@ -1,0 +1,16 @@
+from collections import defaultdict
+
+def solution(nums):
+    
+    dic = defaultdict(int)
+    
+    for n in nums:
+        dic[n] += 1
+    
+    len_dic = len(dic)
+    can_select = len(nums)//2    
+    if len_dic >= can_select:
+        answer = can_select
+    else:
+        answer =  len_dic
+    return answer
