@@ -41,12 +41,17 @@ defaultdict(list)
 딕셔너리에 items() 메서드를 사용해주면 {"key" : value}의 형태를 [(key, value)]의 형태로 만들어 준다.
 ## key를 기준으로 딕셔너리 정렬
 ```python
-sorted(d.items(), key=lambda x : x[1])
+sorted(d)
 ```
 
 ## value를 기준으로 딕셔너리 정렬
 ```python
 sorted(d.items(), key=lambda x : x[1])
+```
+### value가 list인 경우
+```python
+for key in d:
+    d[key].sort()
 ```
 
 # Math
