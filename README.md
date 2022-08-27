@@ -58,10 +58,11 @@ for key in d:
 # bisect
 이진 탐색 모듈
 ## 특정 값 위치
+해당 값이 위치한 마지막 index 표시
 ```python
 import bisect
-mylist = [1, 2, 3, 7, 9, 11, 33]
-print(bisect.bisect(mylist, 3))
+mylist = [1, 2, 3, 3, 7, 9, 11, 33]
+print(bisect.bisect(mylist, 3)) # 4
 ```
 ## 특정 값 갯수
 ```python
