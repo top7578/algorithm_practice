@@ -54,6 +54,23 @@ for key in d:
     d[key].sort()
 ```
 
+
+# bisect
+이진 탐색 모듈
+## 특정 값 위치
+```python
+import bisect
+mylist = [1, 2, 3, 7, 9, 11, 33]
+print(bisect.bisect(mylist, 3))
+```
+## 특정 값 갯수
+```python
+import bisect
+mylist = [1, 2, 3, 3, 7, 9, 11, 33]
+print(bisect.bisect_right(mylist, 3) - bisect.bisect_left(mylist, 3))
+```
+
+
 # Math
 > import math
 
@@ -124,4 +141,30 @@ for number1, number2, number3 in zip(list1, list2, list3):
 animals = ['cat', 'dog', 'lion']
 sounds = ['meow', 'woof', 'roar']
 answer = dict(zip(animals, sounds)) # {'cat': 'meow', 'dog': 'woof', 'lion': 'roar'}
+```
+
+# List Comprehension
+for 문과 if문을 한번에
+```python
+mylist = [3, 2, 6, 7]
+answer = [number**2 for number in mylist if number % 2 == 0]
+```
+
+# for-else문
+flag 대신 사용.
+for loop가 break없이 빠져나올 경우 else문 실행.
+continue는 break 처럼 동작하지 않음.
+
+# 포매팅
+```python
+a = 3
+print(f'{a} 입니다')
+```
+
+# inf
+가장 큰 수 표현
+```python
+inf = int(1e9)
+print(inf > inf)   #False
+print(inf+1 > inf) #True
 ```
