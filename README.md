@@ -106,3 +106,22 @@ def change_10to2(n):
 ```python
 int(문자열 값, n)
 ```
+
+# zip 함수
+각 iterables 의 요소들을 모으는 이터레이터를 만듭니다.
+튜플의 이터레이터를 돌려주는데, i 번째 튜플은 각 인자로 전달된 시퀀스나 이터러블의 i 번째 요소를 포함합니다.
+## 사용 예 #1 - 여러 개의 Iterable 동시에 순회할 때 사용
+```python
+list1 = [1, 2, 3, 4]
+list2 = [100, 120, 30, 300]
+list3 = [392, 2, 33, 1]
+answer = []
+for number1, number2, number3 in zip(list1, list2, list3):
+   print(number1 + number2 + number3)
+```
+## 사용 예 #2 - Key 리스트와 Value 리스트로 딕셔너리 생성하기
+```python
+animals = ['cat', 'dog', 'lion']
+sounds = ['meow', 'woof', 'roar']
+answer = dict(zip(animals, sounds)) # {'cat': 'meow', 'dog': 'woof', 'lion': 'roar'}
+```
