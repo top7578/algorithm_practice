@@ -1,0 +1,27 @@
+'''
+1. 아이디어
+- 이전의 값을 재활용 하는 알고리즘 (점화식)
+
+2. 시간 복잡도
+n*c
+
+3. 자료구조
+금액 배열: int[]
+'''
+
+import sys
+input = sys.stdin.readline
+
+c, n = map(int, input().split())
+
+cities = [list(map(int, input().split())) for _ in range(n)]
+
+INF = int(1e9)
+d = [INF]*(1100+1)
+d[0] = 0
+for city in cities:
+    for i in range(c+1):
+        if (i+city[1]) <= 1100:
+            d[i+city[1]] = min(d[i+city[1]], d[i]+city[0])   
+
+print(min(d[c:]))        
