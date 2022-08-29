@@ -1,0 +1,43 @@
+'''
+1. 아이디어
+- BFS
+- words에 target 단어 있어야 됨
+- 완탐하면서 아직 방문하지 않았고, now랑 한 글자만 차이 날 때 이동
+
+2. 시간복잡도
+-  V*글자수*O(V+E)
+
+3. 자료구조
+방문여부+결과값: defaultdict(int)
+'''
+from collections import deque
+from collections import defaultdict
+
+visited = defaultdict(int)
+def solution(begin, target, words):
+    
+    def can_move(now, next):
+        #아직 방문 x & 한 글자 다른지
+        if visited[next] != 0:
+            return False
+        diff = 0
+        for i in range(len(now)):
+            if now[i] != next[i]:
+                diff +=1
+        return True if diff == 1 else False
+    
+    def bfs():
+        q = deque([begin])
+        visited[begin] = 0
+        while q:
+            if visited[target] != 0:
+                return
+            now = q.popleft()
+            for next in words:
+                # 한 글자만 다르면 이동하고 visited 표시
+                if can_move(now, next):
+                    visited[next] = visited[now]+1
+                    q.append(next)
+    
+    bfs()
+    return visited[target]
