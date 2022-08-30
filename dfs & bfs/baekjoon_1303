@@ -1,0 +1,40 @@
+from collections import deque
+import sys
+input = sys.stdin.readline
+
+n, m = map(int, input().split())
+board = [input().strip() for _ in range(m)]
+
+visited = [[False]*n for _ in range(m)]
+
+dx = [-1, 0, 1, 0]
+dy = [0, 1, 0, -1]
+
+def dfs(x, y, color):
+
+    q = deque([(x, y)])
+    tmp = 1
+    while q:
+        x, y = q.popleft()
+        for d in range(4):
+            nx = x + dx[d]
+            ny = y + dy[d]
+            if 0 <= nx < m and 0 <= ny < n:
+                if not visited[nx][ny] and board[nx][ny] == color:
+                    visited[nx][ny] = True
+                    q.append((nx, ny))
+                    tmp += 1
+    return tmp
+
+w, b = 0, 0 
+for i in range(m):
+    for j in range(n):
+        if not visited[i][j]:
+            visited[i][j] = True
+            tmp = dfs(i, j, board[i][j])
+
+            if board[i][j] == 'W':
+                w += tmp**2
+            elif board[i][j] == 'B':
+                b += tmp**2
+print(w, b)
