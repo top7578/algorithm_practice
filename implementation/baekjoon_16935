@@ -1,0 +1,78 @@
+'''
+1. 아이디어
+- 1~6번 연산 수행
+- 회전하는 부분(3, 4번)에서 행과 열의 길이가 바뀜
+- 5번 6번 연산은 범위를 나눠서 처리
+2. 시간복잡도
+- O(NM)
+- N*M = 10000
+3. 자료구조
+전체 배열: int[][]
+'''
+import sys
+input = sys.stdin.readline
+
+n, m, r = map(int, input().split())
+
+board = [
+    list(map(int, input().split()))
+    for _ in range(n)
+]
+
+data = list(map(int, input().split()))
+
+def change_board(x):
+    tmp = []
+    n = len(board)
+    m = len(board[0])
+    if x == 1:
+        for i in range(n):
+            tmp.append(board[n-1-i])
+    elif x == 2:
+        for i in range(n):
+            tmp.append(board[i][::-1])
+    elif x == 3:
+        tmp = [[0]*n for _ in range(m)]
+        for i in range(n):
+            for j in range(m):
+                tmp[j][n-1-i] = board[i][j]
+    elif x == 4:
+        tmp = [[0]*n for _ in range(m)]
+        for i in range(n):
+            for j in range(m):
+                tmp[m-1-j][i] = board[i][j]
+    elif x == 5:
+        tmp = [[0]*m for _ in range(n)]
+        for i in range(n//2):
+            for j in range(m//2):
+                tmp[i][j + m//2] = board[i][j]
+        for i in range(n//2):
+            for j in range(m//2, m):
+                tmp[i + n//2][j] = board[i][j]
+        for i in range(n//2, n):
+            for j in range(m//2, m):
+                tmp[i][j - m//2] = board[i][j]
+        for i in range(n//2, n):
+            for j in range(m//2):
+                tmp[i - n//2][j] = board[i][j]
+    elif x == 6:
+        tmp = [[0] * m for _ in range(n)]
+        for i in range(n // 2):     
+            for j in range(m // 2):
+                tmp[i + n // 2][j] = board[i][j]
+        for i in range(n // 2, n):    
+            for j in range(m // 2):
+                tmp[i][j + m // 2] = board[i][j]
+        for i in range(n // 2, n):    
+            for j in range(m // 2, m):
+                tmp[i - n // 2][j] = board[i][j]
+        for i in range(n // 2):   
+            for j in range(m // 2, m):
+                tmp[i][j - m // 2] = board[i][j]
+    return tmp
+    
+for x in data:
+    board = change_board(x)
+
+for i in range(len(board)):
+    print(*board[i])
