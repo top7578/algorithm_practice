@@ -1,0 +1,47 @@
+'''
+1. 아이디어
+- 걷거나 순간이동 경우 bfs
+- 이미 방문한 위치면 skip
+- 경로 일일이 저장 -> 
+- 메모리초과) 해당 노드를 방문했을 때, 어디서 왔는지 연결리스트 형태로 저장
+2. 시간복잡도
+- BFS: O(V+E)
+- V, E : N, 3N
+- V+E : 4N = 400,000   
+3. 자료구조
+- 방문 && 경로 확인: int[], 해당 위치에 오기 위한 전 위치 저장
+cf) visited[현재 수빈이의 위치] = 바로 이전의 수빈이의 위치
+- 방문 저장: (시간, 위치)[]
+'''
+from collections import deque
+import sys
+input = sys.stdin.readline
+
+n, k = map(int, input().split())
+
+visited = [-1] * 100001
+
+def bfs(x):
+    global answer_time
+    global answer_path
+    q = deque([(0, x)])
+    while q:
+        time, now = q.popleft()
+        if now == k:
+            answer_time = time
+
+            for _ in range(answer_time + 1):
+                answer_path.append(now)
+                now = visited[now]
+            break
+
+        for next in [now-1, now+1, now*2]:
+            if 0 <= next <= 100000 and visited[next] == -1:
+                q.append((time+1, next))
+                visited[next] = now
+
+answer_time = -1
+answer_path = []
+bfs(n)
+print(answer_time)
+print(*answer_path[::-1])
