@@ -1,0 +1,32 @@
+'''
+1. 아이디어
+- 배열 회전: 첫번째 값 저장하고 회전 진행
+- min(n, m)//2 깊이 만큼 회전
+2. 시간복잡도
+- O(N*M*R)
+- N*M*R = 300*300*1000 = 90,000,000
+3. 자료구조
+- 배열 저장: int[][]
+'''
+n, m, r = map(int, input().split())
+arr = [
+    list(map(int, input().split()))
+    for _ in range(n)    
+]
+for _ in range(r):
+    for k in range(min(n, m)//2):
+        tmp = arr[k][k]
+        for j in range(k, m-k-1):
+            arr[k][j] = arr[k][j+1]
+        for i in range(k, n-k-1):
+            arr[i][m-k-1] = arr[i+1][m-k-1]
+        for j in range(m-k-1, k, -1):
+            arr[n-1-k][j] = arr[n-1-k][j-1]
+        for i in range(n-k-1, k+1, -1):
+            arr[i][k] = arr[i-1][k]
+        arr[k+1][k] = tmp
+
+for i in range(n):
+    print(*arr[i])
+        
+
