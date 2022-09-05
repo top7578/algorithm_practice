@@ -1,0 +1,41 @@
+'''
+1. 아이디어
+- BFS
+- 100 넘으면 이동 X
+- 100 도착하면 종료
+2. 시간복잡도
+- O(V+E)
+- V+E = N+6N = 7N = 700 
+3. 자료구조
+- 사다리, 뱀 이동 위치: dict
+- 방문 여부 확인: int[]
+- q: (주사위 굴린 횟수, 위치)[]
+'''
+from collections import deque, defaultdict
+
+dict = defaultdict(int)
+
+n, m = map(int, input().split())
+for _ in range(n+m):
+    from_pos, to_pos = map(int, input().split())
+    dict[from_pos] = to_pos
+
+def bfs(start):
+    q = deque([(0, start)])
+    visited[start] = 0
+    while q:
+        time, now = q.popleft()
+        if now == 100:
+            return time
+        for i in range(1, 7):
+            next = now + i
+            if next in dict:
+                next = dict[next]
+            if next > 100:
+                continue
+            if visited[next] == -1:
+                q.append((time+1, next))
+                visited[next] = time+1
+
+visited = [-1] * 101
+print(bfs(1))
