@@ -1,0 +1,27 @@
+'''
+1. 아이디어
+- LCS(최장 공통 수열)
+- 현재 비교하는 숫자가 다르다면 dp[i-1][j] 혹은 dp[i][j-1] 중 큰 값을 저장하고, 
+- 비교하는 숫자가 같다면 dp[i-1][j-1]+1를 저장
+- 총 수열 길이에서 최장 공통 수열 길이 뺌
+2. 시간복잡도
+- O(N^2)
+3. 자료구조
+- 수열: int[]
+- d: int[][]
+'''
+
+n = int(input())
+seq = list(map(int, input().split()))
+
+d = [
+    [0]*(n+1)
+    for _ in range(n+1)
+]
+for i in range(1, n+1):
+    for j in range(1, n+1):
+        if seq[-i]==seq[j-1]:
+            d[i][j] = d[i-1][j-1]+1
+        else:
+            d[i][j] = max(d[i][j-1], d[i-1][j])
+print(n-d[n][n])
