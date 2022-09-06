@@ -1,0 +1,26 @@
+from itertools import combinations
+
+n = int(input())
+
+people = [i for i in range(1, n+1)]
+
+s = [
+    list(map(int, input().split()))
+    for _ in range(n)
+]
+
+answer = 987654321
+for team_candidates in list(combinations(people, n//2)):
+    t1 = team_candidates
+    t2 = [i for i in range(1, n+1) if i not in team_candidates]
+
+    t1_sum = 0
+    t2_sum = 0
+    for m1, m2 in list(combinations(t1, 2)):
+        t1_sum += (s[m1-1][m2-1] + s[m2-1][m1-1])
+    for m1, m2 in list(combinations(t2, 2)):
+        t2_sum += (s[m1-1][m2-1] + s[m2-1][m1-1])
+
+    answer = min(answer, abs(t1_sum-t2_sum))
+
+print(answer)        
