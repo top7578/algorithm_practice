@@ -1,0 +1,48 @@
+'''
+총 돌의 개수는 고정이므로 2개만 넣으면 나머지 1개는 total에서 빼면 된다.
+'''
+from collections import deque
+
+a, b, c = map(int, input().split())
+
+total = a + b + c
+visited = [
+    [False] * (total+1)
+    for _ in range(total+1)
+]
+
+def bfs():
+    global a, b, c, total
+    q = deque()
+    x = min(a, b, c)
+    y = max(a, b, c)
+    q.append((x, y))
+    visited[x][y] = True
+    while q:
+        x, y = q.popleft()
+        z = total - x - y
+        if x == y == z:
+            print(1)
+            return 
+        for a, b in (x, y), (y, z), (x, z):
+            if a < b:
+                b -= a
+                a += a
+            elif a > b:
+                a -= b
+                b += b
+            else:
+                continue
+            c = total - a - b
+            x = min(a, b, c)
+            y = max(a, b, c)
+
+            if not visited[x][y]:
+                q.append((x, y))
+                visited[x][y] = True
+    print(0)
+
+if total % 3 != 0:
+    print(0)
+else:
+    bfs()
