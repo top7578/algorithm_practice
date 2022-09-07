@@ -1,0 +1,15 @@
+h, w, x, y = map(int, input().split())
+
+arr = [
+    list(map(int, input().split()))
+    for _ in range(h+x)
+]
+
+for b_x in range(h):
+    for b_y in range(w):
+        arr[b_x+x][b_y+y] -= arr[b_x][b_y]
+
+for i in range(h):
+    for j in range(w):
+        print(arr[i][j], end=' ')
+    print()
