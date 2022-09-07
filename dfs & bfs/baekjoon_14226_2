@@ -1,5 +1,7 @@
 '''
-q: (시간, 이모티콘 갯수, 클립보드에 저장된 수)[]
+자료구조:
+- 방문 여부 체크: visited[bool][bool] -> 시간을 저장했으면 조금 더 깔끔한 코드 가능! 
+- q: (시간, 이모티콘 갯수, 클립보드에 저장된 수)[]
 '''
 from collections import deque
 
@@ -18,7 +20,7 @@ def bfs():
                 visited[next_cnt][next_clip_board] = True
         
 visited = [
-    [False] * (2001)
+    [False] * 2001
+    for _ in range(2001)
 ]
 print(bfs())
-
