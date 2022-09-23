@@ -1,3 +1,6 @@
+# 파이썬 기본 연산자 시간 복잡도
+https://dev.plusblog.co.kr/42
+
 # itertools
 > from itertools
 
