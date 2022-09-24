@@ -1,0 +1,24 @@
+from itertools import product
+
+def solution(users, emoticons):
+    ans = [0, 0]
+    for candidates in list(product([40, 30, 20, 10], repeat=len(emoticons))):    #(10, 10, ...)
+        pluse_user = 0
+        total_price = 0
+        for user in users:
+            price = 0   
+            for i, percentate in enumerate(candidates):    #10
+                # 사는 조건
+                if user[0] <= percentate:
+                    price += emoticons[i]*(100-percentate)//100
+            if price >= user[1]:
+                pluse_user += 1
+            else:
+                total_price += price
+        if ans[0] < pluse_user:
+            ans = [pluse_user, total_price]
+        elif ans[0] == pluse_user and ans[1] < total_price:
+            ans = [pluse_user, total_price]
+    return ans
+
+print(solution([[40, 10000], [25, 10000]], [7000, 9000]))
