@@ -1,0 +1,34 @@
+from collections import defaultdict
+
+def solution(today, terms, privacies):
+
+    today = today.split('.')
+    today = "".join(today)
+
+    dic = defaultdict(int)
+    for term in terms:
+        term = term.split()
+        dic[term[0]] = int(term[1])
+    
+    def get_expired_date(date, type_):
+        y = date[0]
+
+        y += (int(date[1]) + dic[type_]-1)//12
+        m = (int(date[1]) + dic[type_]-1)%12+1
+        m = '0' + str(m) if m < 10 else str(m)
+
+        d = '0' + str(date[2]) if date[2] < 10 else str(date[2])
+
+        return str(y)+m+d
+        
+    ans = []
+    for i, privacy in enumerate(privacies):
+        date, type_ = privacy.split()
+        date = date.split('.')
+        
+        privacy = list(map(int, date))
+
+        if today >= get_expired_date(privacy, type_):
+            ans += [i+1]
+
+    return ans
