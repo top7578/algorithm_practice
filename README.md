@@ -42,6 +42,14 @@ defaultdict(int)
 defaultdict(list)
 ```
 딕셔너리에 items() 메서드를 사용해주면 {"key" : value}의 형태를 [(key, value)]의 형태로 만들어 준다.
+## 기본문법
+```python
+d[k] = v  # (k, v) 추가
+d.pop(k)  # key가 k인 쌍 찾아 제거
+k in d    # 현재 hashmap에 key가 k인 쌍이 있는지 확인
+```
+key 가능 type immutable한 값
+-> int, char 등의 primitive type과 string, tuple 등 가능, mutable한 list, dict 등의 type은 가변적이기 때문에 불가
 ## items, keys, values
 ```python
 print(d.items())   #dict_items([(1, 3), (2, 4), (-1, 6)])
