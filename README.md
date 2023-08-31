@@ -72,13 +72,20 @@ for key in d:
 ```
 
 
-# hash
+# set
 ## 기본문법
 ```python
 s=set()
 s.add(e)     # 데이터 e 추가
 s.remove(e)  # 데이터 중 숫자 e 찾아 제거
 e in s       # 현재 hashset에 숫자 e가 들어 있는지 확인
+```
+### 합집합, 교집합, 차집합
+```python
+# a: {1,2,6}, b: {2,6,9}
+a|b   #{1,2,6,9}
+a&b   #{2,6}
+a-b   #{1}
 ```
 
 
