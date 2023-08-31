@@ -29,7 +29,7 @@ heapq.heapify( 리스트 )
 
 ```python
 a = [4,1,3,10]
-heapq.heapify(a)  //결과: a는 [1, 4, 3, 10]
+heapq.heapify(a)  #결과: a는 [1, 4, 3, 10]
 ```
 -> 힙에서 인덱스 0이 최솟값이라고 해서, 인덱스 1에 두 번째, 인덱스 2에 세 번째로 작은 원소가 있는 것이 아니다.
 두 번째로 작은 원소를 얻으려면 heappop()을 통해 최솟값을 삭제한 후 heap[0]로 접근하는 방법을 사용하거나, 인덱스 1을 인덱스 2와 비교하는 방법을 사용해야 한다. (최소값만 보장)
@@ -42,14 +42,20 @@ defaultdict(int)
 defaultdict(list)
 ```
 딕셔너리에 items() 메서드를 사용해주면 {"key" : value}의 형태를 [(key, value)]의 형태로 만들어 준다.
+## items, keys, values
+```python
+print(d.items())   #dict_items([(1, 3), (2, 4), (-1, 6)])
+print(d.keys())    #dict_keys([1, 2, -1])
+print(d.values())  #dict_values([3, 4, 6])
+```
 ## key를 기준으로 딕셔너리 정렬
 ```python
-sorted(d)
+sorted(d)   #['blue', 'green', 'red']: list 형태로 return
 ```
 
 ## value를 기준으로 딕셔너리 정렬
 ```python
-sorted(d.items(), key=lambda x : x[1])
+sorted(d.items(), key=lambda x : x[1])   #[('red', 3), ('blue', 3), ('green', 1)]: list 형태로 return
 ```
 ### value가 list인 경우
 ```python
