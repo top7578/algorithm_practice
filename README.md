@@ -72,6 +72,16 @@ for key in d:
 ```
 
 
+# hash
+## 기본문법
+```python
+s=set()
+s.add(e)     # 데이터 e 추가
+s.remove(e)  # 데이터 중 숫자 e 찾아 제거
+e in s       # 현재 hashset에 숫자 e가 들어 있는지 확인
+```
+
+
 # bisect
 이진 탐색 모듈
 ## 특정 값 위치
