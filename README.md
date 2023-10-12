@@ -96,7 +96,17 @@ a-b   #{1}
 ```python
 import bisect
 mylist = [1, 2, 3, 3, 7, 9, 11, 33]
-print(bisect.bisect(mylist, 3)) # 4
+print(bisect.bisect(mylist, 3)) # 4 (bisect = bisect_right)
+```
+target 값 존재하지 않아도 index 출력하므로 target 값과 동일한지 check하는 로직 필요요
+```
+for _ in range(m):
+    target = int(input())
+    index = bisect.bisect_right(lst, target)
+    if lst[index-1] == target:
+        print(index)
+    else:
+        print(-1)
 ```
 ## 특정 값 갯수
 ```python
@@ -228,4 +238,11 @@ print(f'{a} 입니다')
 inf = int(1e9)
 print(inf > inf)   #False
 print(inf+1 > inf) #True
+```
+
+# sys
+## 프로그램 종료 함수수
+```
+import sys
+sys.exit(0)
 ```
